@@ -13,9 +13,14 @@ public class ModelComponentePrecio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idComponentePrecio;
+
     private String nombreCP;
+
     private double precioCP;
+
     private double IVA;
+
     private double tasaAeroportuaria;
+
     private int cotización;
 }
