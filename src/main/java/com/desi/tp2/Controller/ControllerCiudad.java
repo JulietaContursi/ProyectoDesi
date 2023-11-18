@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -34,13 +35,12 @@ import java.util.Optional;
             ciudadRepository.save(ciudad3);
 
         }
-    @GetMapping("/")
-    public String obtenerCiudades(Model model) {
-        List<ModelCiudad> ciudades = ciudadRepository.findAll();
-        model.addAttribute("ciudades",ciudades);
-        return "ciudades";
-    }
-
+        @GetMapping("/lista")
+        public ModelAndView ciudades() {
+            ModelAndView mav = new ModelAndView("ciudades");
+            mav.addObject("ciudades", ciudadRepository.findAll());
+            return mav;
+        }
 
         /*@GetMapping("/")
         public List<ModelCiudad> obtenerCiudades() {
