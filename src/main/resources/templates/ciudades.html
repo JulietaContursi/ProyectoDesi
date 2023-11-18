@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de Ciudades</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+<h1>Listado de Ciudades</h1>
+
+<table th:each="tmpCiudad : ${ciudades} ">
+  <thead>
+  <tr>
+    <th> ID</th>
+    <th> Nombre</th>
+    <th> Código Postal</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr>
+    <td th:text="${tmpCiudad.idCiudad}"></td>
+    <td th:text="${tmpCiudad.nombre}"></td>
+    <td th:text="${tmpCiudad.codigopostal}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

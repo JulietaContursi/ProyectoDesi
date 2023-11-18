@@ -3,6 +3,8 @@ package com.desi.tp2.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Entity
 public class ModelCiudad {
@@ -11,14 +13,15 @@ public class ModelCiudad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCiudad;
 
-    @ManyToOne(targetEntity = ModelVuelo.class)
-    private ModelVuelo vueloOrigen;
+    @OneToMany(targetEntity = ModelVuelo.class, fetch = FetchType.LAZY, mappedBy = "ciudadOrigen")
+    private List<ModelCiudad> Origenes;
 
-    @ManyToOne(targetEntity = ModelVuelo.class)
-    private ModelVuelo vueloDestino;
+    @OneToMany(targetEntity = ModelVuelo.class, fetch = FetchType.LAZY, mappedBy = "ciudadDestino")
+    private List<ModelCiudad> destinos;
+
 
     private String nombre;
 
-    private int CP;
+    private int codigoPostal;
 
 }

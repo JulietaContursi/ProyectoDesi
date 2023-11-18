@@ -16,11 +16,11 @@ public class ModelVuelo {
     @Column(name = "idvuelo")
     private long idVuelo;
 
-    @OneToMany(targetEntity = ModelCiudad.class, fetch = FetchType.LAZY, mappedBy = "vueloOrigen")
-    private List<ModelCiudad> origen;
+    @ManyToOne(targetEntity = ModelCiudad.class)
+    private ModelCiudad ciudadOrigen;
 
-    @OneToMany(targetEntity = ModelCiudad.class, fetch = FetchType.LAZY, mappedBy = "vueloDestino")
-    private List<ModelCiudad> destino;
+    @ManyToOne(targetEntity = ModelCiudad.class)
+    private ModelCiudad ciudadDestino;
 
     public enum tipoVuelo {
         NACIONAL,INTERNACIONAL
