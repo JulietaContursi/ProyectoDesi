@@ -1,9 +1,6 @@
 package com.desi.tp2.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 
@@ -20,7 +17,10 @@ public class ModelComponentePrecio {
 
     private double IVA;
 
-    private double tasaAeroportuaria;
+    @Column(name = "tasainternacional", nullable = false )
+    private double tasaAeroportuariaInternacional;
+    @Column(name = "tasanacional")
+    private double tasaAeroportuariaNacional;
 
     private int cotización;
 }

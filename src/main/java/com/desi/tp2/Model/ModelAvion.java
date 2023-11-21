@@ -4,6 +4,8 @@ package com.desi.tp2.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Entity
 public class ModelAvion {
@@ -13,8 +15,8 @@ public class ModelAvion {
     @Column(name = "idavion")
     private long idAvion;
 
-    @ManyToOne(targetEntity = ModelVuelo.class)
-    private ModelVuelo vuelo;
+    @OneToMany(targetEntity = ModelVuelo.class, fetch = FetchType.LAZY, mappedBy = "avion")
+    private List<ModelVuelo> vuelos;
 
     private String nombre;
 

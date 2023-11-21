@@ -23,7 +23,7 @@ public class ModelCliente {
     private int numeroPasaporte;
 
     @OneToMany(targetEntity = ModelTicket.class, fetch = FetchType.LAZY, mappedBy = "cliente")
-    private List<ModelTicket> ticket;
+    private List<ModelTicket> tickets;
 
 
 }

@@ -2,10 +2,9 @@ package com.desi.tp2.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.List;
-
 
 @Data
 @Entity
@@ -25,24 +24,28 @@ public class ModelVuelo {
     public enum tipoVuelo {
         NACIONAL,INTERNACIONAL
     }
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private tipoVuelo tipo;
 
     @Column(name = "preciovuelo", nullable = false)
     private double precioVuelo;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "fechahora", nullable = false)
     private LocalDate fechaHora;
 
-    @OneToMany(targetEntity = ModelAvion.class, fetch = FetchType.LAZY, mappedBy = "vuelo")
-    private List<ModelAvion> avion;
+    @ManyToOne(targetEntity = ModelAvion.class)
+    private ModelAvion avion;
+
 
     public enum estadoVuelo{
         NORMAL, REPROGRAMADO,CANCELADO
     }
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private estadoVuelo estado;
 
-    @OneToMany(targetEntity = ModelTicket.class, fetch = FetchType.LAZY, mappedBy = "vuelo")
-    private List<ModelTicket> ticket;
+    @ManyToOne(targetEntity = ModelTicket.class)
+    private ModelTicket ticket;
 }
