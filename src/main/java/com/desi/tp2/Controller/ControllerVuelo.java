@@ -1,15 +1,15 @@
 package com.desi.tp2.Controller;
 
 import com.desi.tp2.Model.ModelVuelo;
-import com.desi.tp2.Repository.RepoVuelo;
 import com.desi.tp2.Service.ServiceVuelo;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/vuelos")
@@ -18,38 +18,38 @@ import java.util.List;
     @Autowired
     private ServiceVuelo vueloRepository;
 
-    @GetMapping("/todos")
-    public String busquedaVuelo(Model model){
-        try {
-            List<ModelVuelo> vuelos = this.vueloRepository.buscarTodo();
-            model.addAttribute("vuelos", vuelos);
-            return "vuelos.html";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "error.html";
-        }
-    }
-/*    @GetMapping("/lista")
-    public ModelAndView vuelos() {
-        ModelAndView mav = new ModelAndView("vuelos");
-        mav.addObject("vuelos", this.vueloRepository.findAll());
-        return mav;
+    @GetMapping("/lista")
+    public ModelAndView vuelos() throws Exception {
+            ModelAndView mav = new ModelAndView("vuelos");
+            mav.addObject("vuelos", vueloRepository.buscarTodo());
+         return mav;
     }
 
-    @GetMapping("/obtenervuelos")
-    public List<ModelVuelo> obtenervuelos() {
-        return vueloRepository.findAll();
-    }*/
+    @SneakyThrows
+    @GetMapping("/{id}")
+    public ResponseEntity<ModelVuelo> obtenerVueloPorId(@PathVariable(value = "id") Long idVuelo) {
+        Optional<ModelVuelo> vuelo = Optional.ofNullable(vueloRepository.buscarPorId(idVuelo));
+        return vuelo.map(modelVuelo -> ResponseEntity.ok().body(modelVuelo)).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
-    /*@PostMapping("/nuevo")
-    public ModelVuelo crearVuelo(@RequestBody ModelVuelo nuevoVuelo) {
-        return vueloRepository.save(nuevoVuelo);
-    }*/
+    @GetMapping("/nuevo")
+    ModelAndView nuevo(){
+        return new ModelAndView("crearVuelo")
+                .addObject("vuelo" , new ModelVuelo());
+    }
+
 
     @PostMapping("/nuevo")
-    public String crearVuelo(Model modelo) {
-        ModelVuelo vuelo = new ModelVuelo();
-        modelo.addAttribute("vuelo", vuelo);
-        return "crearvuelo";
+    public ModelAndView crear(ModelVuelo vuelo, RedirectAttributes ra) {
+        ModelAndView mav = new ModelAndView();
+        try {
+            vueloRepository.guardar(vuelo);
+            ra.addFlashAttribute("msgExito","Vuelo creado con éxito!");
+            mav.setViewName("redirect:/vuelos/lista");
+        } catch (Exception e) {
+            mav.setViewName("error");
+            mav.addObject("mensaje", "Error al crear el vuelo: " + e.getMessage());
+        }
+        return mav;
     }
 }

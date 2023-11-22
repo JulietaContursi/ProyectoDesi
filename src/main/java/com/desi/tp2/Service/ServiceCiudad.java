@@ -3,16 +3,17 @@ package com.desi.tp2.Service;
 import com.desi.tp2.Model.ModelCiudad;
 import com.desi.tp2.Repository.RepoCiudad;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ServiceCiudad implements ServicioBase<ModelCiudad>{
-    @Autowired
-    private RepoCiudad repoCiudad;
+    private final RepoCiudad repoCiudad;
+
+    public ServiceCiudad(RepoCiudad repoCiudad) {
+        this.repoCiudad = repoCiudad;
+    }
 
     @Override
     @Transactional
@@ -30,14 +31,14 @@ public class ServiceCiudad implements ServicioBase<ModelCiudad>{
 
     @Override
     @Transactional
-    public ModelCiudad saveOne(ModelCiudad entity) throws Exception {
+    public ModelCiudad guardar(ModelCiudad entity) throws Exception {
         ModelCiudad ciudad = this.repoCiudad.save(entity);
         return ciudad;
     }
 
     @Override
     @Transactional
-    public ModelCiudad updateOne(ModelCiudad entity, long id) throws Exception {
+    public ModelCiudad actualizar(ModelCiudad entity, long id) throws Exception {
         Optional<ModelCiudad> opt = this.repoCiudad.findById(id);
         ModelCiudad ciudad = opt.get();
         ciudad = this.repoCiudad.save(entity);
@@ -46,7 +47,7 @@ public class ServiceCiudad implements ServicioBase<ModelCiudad>{
 
     @Override
     @Transactional
-    public boolean deleteById(long id) throws Exception {
+    public boolean borrar(long id) throws Exception {
         Optional<ModelCiudad> opt = this.repoCiudad.findById(id);
         if(!opt.isEmpty()){
             ModelCiudad ciudad = opt.get();

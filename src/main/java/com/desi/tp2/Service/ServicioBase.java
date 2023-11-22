@@ -4,7 +4,7 @@ import java.util.List;
 public interface ServicioBase<E> {
         List<E> buscarTodo() throws Exception;
         E buscarPorId(long id) throws Exception;
-        E saveOne(E entity) throws Exception;
-        E updateOne(E entity, long id) throws Exception;
-        boolean deleteById(long id) throws Exception;
+        E guardar(E entity) throws Exception;
+        E actualizar(E entity, long id) throws Exception;
+        boolean borrar(long id) throws Exception;
 }

@@ -1,17 +1,13 @@
 package com.desi.tp2.Controller;
 
-import com.desi.tp2.Model.ModelAvion;
 import com.desi.tp2.Model.ModelCiudad;
 import com.desi.tp2.Service.ServiceCiudad;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.Optional;
 
 @RestController
@@ -26,8 +22,6 @@ import java.util.Optional;
             return new ModelAndView("index");
         }
 
-
-
         @SneakyThrows
         @GetMapping("/lista")
         public ModelAndView ciudades() {
@@ -35,8 +29,6 @@ import java.util.Optional;
             mav.addObject("ciudades", ciudadRepository.buscarTodo());
             return mav;
         }
-
-
 
         @SneakyThrows
         @GetMapping("/{id}")
@@ -55,7 +47,7 @@ import java.util.Optional;
         public ModelAndView crear(ModelCiudad ciudad, RedirectAttributes ra) {
             ModelAndView mav = new ModelAndView();
             try {
-                ciudadRepository.saveOne(ciudad);
+                ciudadRepository.guardar(ciudad);
                 ra.addFlashAttribute("msgExito","Ciudad creada con éxito!");
                 mav.setViewName("redirect:/ciudades/lista");
             } catch (Exception e) {
@@ -65,29 +57,16 @@ import java.util.Optional;
             return mav;
         }
 
-        @PostMapping("/crear")
-        public ModelAndView crearCiudad(@ModelAttribute("ciudadForm") ModelCiudad nuevaCiudad) {
-            ModelAndView mav = new ModelAndView("crearCiudad");
-            try {
-                ciudadRepository.saveOne(nuevaCiudad);
-                mav.addObject("mensaje", "La ciudad se ha creado correctamente");
-            } catch (Exception e) {
-                mav.addObject("mensaje", "Error al crear la ciudad: " + e.getMessage());
-            }
-            return mav;
-        }
 
-
-        @SneakyThrows
         @PutMapping("/{id}")
         public ResponseEntity<ModelCiudad> actualizarCiudad(@PathVariable(value = "id") Long idCiudad,
-                                                       @RequestBody ModelCiudad ciudadActualizada) {
+                                                       @RequestBody ModelCiudad ciudadActualizada) throws Exception {
             Optional<ModelCiudad> ciudad = Optional.ofNullable(ciudadRepository.buscarPorId(idCiudad));
             if (ciudad.isPresent()) {
                 ModelCiudad ciudadExistente = ciudad.get();
                 ciudadExistente.setNombre(ciudadActualizada.getNombre());
                 ciudadExistente.setCodigoPostal(ciudadActualizada.getCodigoPostal());
-                ModelCiudad ciudadActualizadaGuardada = ciudadRepository.saveOne(ciudadExistente);
+                ModelCiudad ciudadActualizadaGuardada = ciudadRepository.guardar(ciudadExistente);
                 return ResponseEntity.ok(ciudadActualizadaGuardada);
             } else {
                 return ResponseEntity.notFound().build();
@@ -100,7 +79,7 @@ import java.util.Optional;
         public ResponseEntity<Void> eliminarCiudad(@PathVariable(value = "id") Long idCiudad) {
             Optional<ModelCiudad> ciudad = Optional.ofNullable(ciudadRepository.buscarPorId(idCiudad));
             if (ciudad.isPresent()) {
-                ciudadRepository.deleteById(idCiudad);
+                ciudadRepository.borrar(idCiudad);
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.notFound().build();

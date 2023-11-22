@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de aviones</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="/"> Control de vuelos</a>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/aviones/nuevo}">Crear Avion</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div >
+    <div class="alert alert-success" role="alert" th:if="${msgExito ne null}" >
+        <td th:text="${msgExito}">
+        </td>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Filas</th>
+            <th>Asientos por fila</th>
+            <th>Aerolínea</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Itera sobre la lista de aviones y muestra cada una en una fila de la tabla -->
+        <tr th:each="aviones : ${aviones}">
+            <td th:text="${aviones.idAvion}"></td>
+            <td th:text="${aviones.nombre}"></td>
+            <td th:text="${aviones.filas}"></td>
+            <td th:text="${aviones.asientosXFila}"></td>
+            <td th:text="${aviones.aerolinea}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
