@@ -12,7 +12,6 @@ public class ModelAvion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idavion")
     private long idAvion;
 
     @OneToMany(targetEntity = ModelVuelo.class, fetch = FetchType.LAZY, mappedBy = "avion")
