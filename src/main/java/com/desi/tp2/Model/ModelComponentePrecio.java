@@ -9,7 +9,7 @@ import lombok.*;
 public class ModelComponentePrecio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idComponentePrecio;
+    private long idComponentePrecio;
 
     private String nombreCP;
 

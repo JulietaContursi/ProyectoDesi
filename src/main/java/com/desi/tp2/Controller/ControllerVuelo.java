@@ -45,10 +45,7 @@ import java.util.Optional;
     @GetMapping("/nuevo") //localhost:8080/vuelos/nuevo
     public String registrar(ModelMap modelo) throws Exception {
         ModelVuelo vuelo = new ModelVuelo();
-        List<ModelCiudad> ciudades = ciudadRepository.buscarTodo();
-        List<ModelAvion> aviones = avionRepository.buscarTodo();
-        modelo.addAttribute("ciudades", ciudades);
-        modelo.addAttribute("aviones", aviones);
+
         modelo.addAttribute("vuelo", vuelo);
         return "crearVuelo.html";
     }

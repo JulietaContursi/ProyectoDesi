@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de tasas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <h1>Aeropuerto de Sauce Viejo - Tasas</h1>
+</head>
+<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="/"> Inicio</a>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/tasas/nueva}">Editar Tasas</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div >
+    <div class="alert alert-success" role="alert" th:if="${msgExito ne null}" >
+      <td th:text="${msgExito}">
+      </td>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio de la tasa</th>
+          <th>IVA</th>
+          <th>Tasa aeroportuaria Nacional</th>
+          <th>Tasa aeroportuaria Internacional</th>
+          <th>Cotización del Dollar</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- Itera sobre la lista de tasas y muestra cada una en una fila de la tabla -->
+        <tr th:each="registro : ${registro}">
+          <td th:text="${nombreCP}"></td>
+          <td th:text="${precioCP}"></td>
+          <td th:text="${IVA}"></td>
+          <td th:text="${tasa.tasaAeroportuariaNacional}"></td>
+          <td th:text="${tasa.tasaAeroportuariaInternacional}"></td>
+          <td th:text="${tasa.cotización}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
