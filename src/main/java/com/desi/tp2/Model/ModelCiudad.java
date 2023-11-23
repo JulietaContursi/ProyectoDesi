@@ -14,10 +14,10 @@ public class ModelCiudad {
     private long idCiudad;
 
     @OneToMany(targetEntity = ModelVuelo.class, fetch = FetchType.LAZY, mappedBy = "ciudadOrigen")
-    private List<ModelCiudad> Origenes;
+    private List<ModelVuelo> Origenes;
 
     @OneToMany(targetEntity = ModelVuelo.class, fetch = FetchType.LAZY, mappedBy = "ciudadDestino")
-    private List<ModelCiudad> destinos;
+    private List<ModelVuelo> destinos;
 
 
     private String nombre;

@@ -2,6 +2,9 @@ package com.desi.tp2.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,6 +21,8 @@ public class ModelCliente {
 
     private String email;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "fechanacimiento")
     private LocalDate fechaNacimiento;
 
     private int numeroPasaporte;

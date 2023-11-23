@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de aviones</title>
+    <title>Lista de clientes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <h1>Aeropuerto de Sauce Viejo - Aviones</h1>
+    <h1>Aeropuerto de Sauce Viejo - Clientes</h1>
 </head>
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/aviones/nuevo}">Crear Avion</a>
+                <a class="nav-link" th:href="@{/clientes/nuevo}">Crear cliente</a>
             </li>
         </ul>
     </div>
@@ -27,20 +27,22 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Nombre</th>
-            <th>Filas</th>
-            <th>Asientos por fila</th>
-            <th>Aerolínea</th>
+            <th>Apellido y Nombre</th>
+            <th>Domicilio</th>
+            <th>Email por fila</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Número de Pasaporte</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Itera sobre la lista de aviones y muestra cada una en una fila de la tabla -->
-        <tr th:each="aviones : ${aviones}">
-            <td th:text="${aviones.idAvion}"></td>
-            <td th:text="${aviones.nombre}"></td>
-            <td th:text="${aviones.filas}"></td>
-            <td th:text="${aviones.asientosXFila}"></td>
-            <td th:text="${aviones.aerolinea}"></td>
+        <!-- Itera sobre la lista de clientes y muestra cada una en una fila de la tabla -->
+        <tr th:each="clientes : ${clientes}">
+            <td th:text="${clientes.idCliente}"></td>
+            <td th:text="${clientes.apellidoNombre}"></td>
+            <td th:text="${clientes.domicilio}"></td>
+            <td th:text="${clientes.email}"></td>
+            <td th:text="${clientes.fechaNacimiento}"></td>
+            <td th:text="${clientes.numeroPasaporte}"></td>
         </tr>
         </tbody>
     </table>
