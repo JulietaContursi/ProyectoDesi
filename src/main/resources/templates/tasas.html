@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/tasas/nueva}">Editar Tasas</a>
+          <a class="nav-link" th:href="@{/tasas/1}">Editar Tasas</a>
         </li>
       </ul>
     </div>
@@ -36,13 +36,13 @@
       </thead>
       <tbody>
       <!-- Itera sobre la lista de tasas y muestra cada una en una fila de la tabla -->
-        <tr th:each="registro : ${registro}">
-          <td th:text="${nombreCP}"></td>
-          <td th:text="${precioCP}"></td>
-          <td th:text="${IVA}"></td>
-          <td th:text="${tasa.tasaAeroportuariaNacional}"></td>
-          <td th:text="${tasa.tasaAeroportuariaInternacional}"></td>
-          <td th:text="${tasa.cotización}"></td>
+        <tr th:each="tasa : ${tasas}">
+          <td th:text="${tasa.nombreCP}"></td>
+          <td th:text="${tasa.precioCP}"></td>
+          <td th:text="${tasa.IVA}"></td>
+          <td th:text="${tasa.tasaAI}"></td>
+          <td th:text="${tasa.tasaAI}"></td>
+          <td th:text="${tasa.cotizacion}"></td>
         </tr>
       </tbody>
     </table>

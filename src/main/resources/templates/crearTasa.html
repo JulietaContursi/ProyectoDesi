@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cargar Tasa</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Valores de Tasas e impuestos</a>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="navbar-nav">
+          <a class="nav-link" th:href="@{/}">Inicio</a>
+          <a class="nav-link" th:href="@{/tasas/lista}">Tasas</a>
+      </div>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+        <h2 class="text-center">Tasas e impuestos</h2>
+        <div class="card-body">
+
+          <form th:action="@{''}" th:object="${tasa}" method="POST">
+            <br>
+            <div >
+              <label for="nombreCP">Nombre:</label>
+              <input type="text" class="form-control" id="nombreCP" placeholder="NombreCP" th:field="*{nombreCP}" required><br>
+
+              <label for="precioCP">Precio:</label>
+              <input type="number" class="form-control" id="precioCP" placeholder="precioCP" th:field="*{precioCP}" required><br>
+
+              <label for="IVA">% IVA:</label>
+              <input type="number" class="form-control" id="IVA" placeholder="IVA" th:field="*{IVA}" required><br>
+
+              <label for="tasaAN">% IVA:</label>
+              <input type="number" class="form-control" id="tasaAN" placeholder="tasaAN" th:field="*{tasaAN}" required><br>
+
+              <label for="tasaAI">Tasa Aeroportuaria InterNacional:</label>
+              <input type="number" class="form-control" id="tasaAI" placeholder="tasaAI" th:field="*{tasaAI}" required><br>
+
+              <label for="cotizacion">Cotizacion:</label>
+              <input type="number" class="form-control" id="cotizacion" placeholder="cotizacion" th:field="*{cotizacion}" required><br>
+
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Cargar Ciudad</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  <br>
+
+</body>
+</html>

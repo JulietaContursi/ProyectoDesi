@@ -3,24 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Crear Vuelo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
-<h1>Crear Vuelo</h1>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Registro de Vuelo</a>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/}">Inicio</a>
+                <a class="nav-link" th:href="@{/vuelos/lista}">Vuelos</a>
+            </div>
+        </div>
+    </nav>
 
-<form action="/vuelos/nuevo" method="post" th:object="${vuelo}">
-    <label>Ciudad:</label>
-    <select name="ciudad" th:field="*{ciudad.id}">
-        <option value="">Seleccionar Ciudad</option>
-        <option th:each="ciudad : ${ciudades}"
-                th:value="${ciudad.id}"
-                th:text="${ciudad.nombre}"></option>
-    </select>
+<!-- dar formato contenedor -->
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <h2 class="text-center">Carga de vuelo</h2>
+                <div class="card-body">
+
+                    <form th:action="@{''}" th:object="${vuelo}" method="post">
+                        <br>
+                        <div >
 
 
-    <input type="submit" value="Guardar">
-</form>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Cargar Ciudad</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <br>
 
-    <button type="submit">Guardar</button>
-</form>
+
 </body>
 </html>

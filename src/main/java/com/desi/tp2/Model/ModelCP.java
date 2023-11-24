@@ -6,7 +6,7 @@ import lombok.*;
 
 @Data
 @Entity
-public class ModelComponentePrecio {
+public class ModelCP {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idComponentePrecio;
@@ -17,10 +17,11 @@ public class ModelComponentePrecio {
 
     private double IVA;
 
-    @Column(name = "tasainternacional", nullable = false )
-    private double tasaAeroportuariaInternacional;
-    @Column(name = "tasanacional")
-    private double tasaAeroportuariaNacional;
+    @Column(nullable = false )
+    private double tasaAI;
 
-    private int cotización;
+    @Column( nullable = false )
+    private double tasaAN;
+
+    private int cotizacion;
 }
