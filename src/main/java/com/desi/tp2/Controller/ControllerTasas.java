@@ -4,6 +4,7 @@ import com.desi.tp2.Model.ModelCP;
 import com.desi.tp2.Service.ServiceTasa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -29,12 +30,13 @@ public class ControllerTasas {
         return tasa.map(modelComponentePrecio -> ResponseEntity.ok().body(modelComponentePrecio)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/nueva")
-    ModelAndView nueva(){
-        return new ModelAndView("crearTasa")
-                .addObject("tasa" , new ModelCP());
+    @GetMapping("/editar/{id}")
+    public ModelAndView editar(@PathVariable(value = "id") Long idComponentePrecio) throws Exception {
+        ModelCP tasa = tasasRepo.buscarPorId(idComponentePrecio);
+        return new ModelAndView("editarTasas")
+                .addObject("tasa", tasa);
     }
-
+    /*
     @PostMapping("/nueva")
     public ModelAndView crear(ModelCP tasa, RedirectAttributes ra) {
         ModelAndView mav = new ModelAndView();
@@ -47,23 +49,29 @@ public class ControllerTasas {
             mav.addObject("mensaje", "Error al crear la Tasa: " + e.getMessage());
         }
         return mav;
-    }
-    @PutMapping("/{id}")
+    }*/
+
+    @PostMapping("/editar/{id}")
+    public String actualizart(@PathVariable Long id,
+                                @ModelAttribute("tasa") ModelCP tasaActualizada,
+                                Model model) throws Exception {
+    /*
     public ResponseEntity<ModelCP> actualizartasas(@PathVariable(value = "id") Long idComponentePrecio,
                                                    @RequestBody ModelCP tasaActualizada) throws Exception {
-        Optional<ModelCP> tasa = Optional.ofNullable(tasasRepo.buscarPorId(idComponentePrecio));
-        if (tasa.isPresent()) {
-            ModelCP tasaExistente = tasa.get();
+      */
+            //Optional<ModelCP> tasa = Optional.ofNullable(tasasRepo.buscarPorId(id));
+
+            ModelCP tasaExistente = tasasRepo.buscarPorId(id);
             tasaExistente.setNombreCP(tasaActualizada.getNombreCP());
             tasaExistente.setPrecioCP(tasaActualizada.getPrecioCP());
             tasaExistente.setIVA(tasaActualizada.getIVA());
             tasaExistente.setTasaAN(tasaActualizada.getTasaAN());
             tasaExistente.setTasaAI(tasaActualizada.getTasaAI());
             tasaExistente.setCotizacion(tasaActualizada.getCotizacion());
-            ModelCP CPActualizadaGuardada = tasasRepo.guardar(tasaExistente);
-            return ResponseEntity.ok(CPActualizadaGuardada);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+            tasasRepo.actualizar(tasaExistente, id);
+
+        return "tasas.html";
     }
+
+
 }

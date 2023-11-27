@@ -34,7 +34,7 @@ public class ServiceTasa implements ServicioBase<ModelCP>{
     @Transactional
     public ModelCP guardar(ModelCP entity) throws Exception {
         ModelCP CP = this.repoCP.save(entity);
-        return null;
+        return CP;
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.desi.tp2.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Data
 @Entity
 public class ModelCP {
