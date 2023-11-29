@@ -3,8 +3,8 @@ package com.desi.tp2.Model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -12,7 +12,6 @@ public class ModelVuelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idvuelo")
     private long idVuelo;
 
     @ManyToOne(targetEntity = ModelCiudad.class)
@@ -22,30 +21,28 @@ public class ModelVuelo {
     private ModelCiudad ciudadDestino;
 
     public enum tipoVuelo {
-        NACIONAL,INTERNACIONAL
+        NACIONAL, INTERNACIONAL
     }
-    @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false)
+
+    @Enumerated(EnumType.STRING)
     private tipoVuelo tipo;
 
-    @Column(name = "preciovuelo", nullable = false)
     private double precioVuelo;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @Column(name = "fechahora", nullable = false)
-    private LocalDate fechaHora;
+    private LocalDateTime fechaHora;
 
     @ManyToOne(targetEntity = ModelAvion.class)
     private ModelAvion avion;
 
-
-    public enum estadoVuelo{
-        NORMAL, REPROGRAMADO,CANCELADO
+    public enum estadoVuelo {
+        NORMAL, REPROGRAMADO, CANCELADO
     }
-    @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false)
+
+    @Enumerated(EnumType.STRING)
     private estadoVuelo estado;
 
-    @ManyToOne(targetEntity = ModelTicket.class)
-    private ModelTicket ticket;
+    @OneToMany(targetEntity = ModelTicket.class, fetch = FetchType.LAZY, mappedBy = "vuelo")
+    private List<ModelTicket> ticket;
+
 }

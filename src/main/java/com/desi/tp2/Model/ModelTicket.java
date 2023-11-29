@@ -1,12 +1,9 @@
 package com.desi.tp2.Model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Objects;
 
-@Data
 @Entity
 public class ModelTicket {
     @Id
@@ -15,9 +12,6 @@ public class ModelTicket {
 
     @ManyToOne(targetEntity = ModelVuelo.class)
     private  ModelVuelo vuelo;
-
-    @OneToMany(targetEntity = ModelVuelo.class, fetch = FetchType.LAZY, mappedBy = "ticket")
-    private List<ModelVuelo> ticket;
 
     @ManyToOne(targetEntity = ModelCliente.class)
     private ModelCliente cliente;
@@ -29,4 +23,80 @@ public class ModelTicket {
     private double precio;
 
     private LocalDate fecha;
+
+    public ModelTicket() {
+    }
+
+    public ModelTicket(ModelVuelo vuelo, ModelCliente cliente, int asientoFila, char asientoLetra, double precio, LocalDate fecha) {
+        this.vuelo = vuelo;
+        this.cliente = cliente;
+        this.asientoFila = asientoFila;
+        this.asientoLetra = asientoLetra;
+        this.precio = precio;
+        this.fecha = fecha;
+    }
+
+    public Long getIdTicket() {
+        return idTicket;
+    }
+
+    public ModelVuelo getVuelo() {
+        return vuelo;
+    }
+
+    public void setVuelo(ModelVuelo vuelo) {
+        this.vuelo = vuelo;
+    }
+
+    public ModelCliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ModelCliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public int getAsientoFila() {
+        return asientoFila;
+    }
+
+    public void setAsientoFila(int asientoFila) {
+        this.asientoFila = asientoFila;
+    }
+
+    public char getAsientoLetra() {
+        return asientoLetra;
+    }
+
+    public void setAsientoLetra(char asientoLetra) {
+        this.asientoLetra = asientoLetra;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ModelTicket that)) return false;
+        return asientoFila == that.asientoFila && asientoLetra == that.asientoLetra && Double.compare(that.precio, precio) == 0 && Objects.equals(idTicket, that.idTicket) && Objects.equals(vuelo, that.vuelo) && Objects.equals(cliente, that.cliente) && Objects.equals(fecha, that.fecha);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idTicket, vuelo, cliente, asientoFila, asientoLetra, precio, fecha);
+    }
 }

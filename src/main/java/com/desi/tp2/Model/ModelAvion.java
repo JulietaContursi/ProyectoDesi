@@ -24,4 +24,15 @@ public class ModelAvion {
     private int asientosXFila;
 
     private String aerolinea;
+
+    public ModelAvion(String nombre, int filas, int asientosXFila, String aerolinea) {
+        this.nombre = nombre;
+        this.filas = filas;
+        this.asientosXFila = asientosXFila;
+        this.aerolinea = aerolinea;
+    }
+
+    public ModelAvion() {
+
+    }
 }

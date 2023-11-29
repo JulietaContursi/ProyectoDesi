@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Crear Vuelo</title>
@@ -25,19 +25,76 @@
                 <h2 class="text-center">Carga de vuelo</h2>
                 <div class="card-body">
 
-                    <form th:action="@{''}" th:object="${vuelo}" method="post">
-                        <br>
-                        <div >
+                    <form th:action="@{''}" th:object="${vuelo}" method="POST">
 
+                        <div>
+                            <label>Ciudad Origen</label>
+                            <select th:field="${vuelo.ciudadOrigen}" class="form-control">
+                                <option th:each="ciudad :${listaDeCiudades}"
+                                        th:value="${ciudad.idCiudad}"
+                                        th:text="${ciudad.nombre}"/>
+                            </select>
+                            <br>
+                            <label>Ciudad Destino</label>
+                            <select th:field="${vuelo.ciudadDestino}" class="form-control">
+                                <option th:each="ciudad :${listaDeCiudades}"
+                                        th:value="${ciudad.idCiudad}"
+                                        th:text="${ciudad.nombre}"/>
+                            </select>
+                            <br>
+                            <label>Avion</label>
+                            <select th:field="${vuelo.avion}" class="form-control">
+                                <option th:each="avion :${listaDeAviones}"
+                                        th:value="${avion.idAvion}"
+                                        th:text="${avion.nombre}"/>
+                            </select>
+                            <br>
 
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">Cargar Ciudad</button>
+                                <label>Tipo de Vuelo:</label>
+                                <label>
+                                    <select th:field="*{tipo}" class="form-control" name="Tipo" th:placeholder="tipo">
+                                        <option th:each="tipoOpt : ${tiposDeVuelos}"
+                                                th:value="${tipoOpt}"
+                                                th:text="${tipoOpt}"></option>
+                                    </select>
+                                </label>
+                            <br>
+                            <label>Precio del Vuelo:</label>
+                            <label>
+                                <input type="number" step="10.00" th:field="*{precioVuelo}" class="form-control" />
+                            </label>
+
+                            <br>
+
+                                <label>Fecha y Hora:</label>
+                                <label>
+                                    <input type="datetime-local" th:field="*{fechaHora}" class="form-control" />
+                                </label>
+
+                            <br>
+
+                                <label>Estado del Vuelo:</label>
+                                <label>
+                                    <select th:field="*{estado}" class="form-control" name="Estado" th:placeholder="estado">
+                                        <option th:each="estadoOpt : ${estadosDeVuelos}"
+                                                th:value="${estadoOpt}"
+                                                th:text="${estadoOpt}"></option>
+                                    </select>
+                                </label>
+                                </label>
+
+                            <br>
+
                         </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Cargar Ciudad</button>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+
     <br>
 
 

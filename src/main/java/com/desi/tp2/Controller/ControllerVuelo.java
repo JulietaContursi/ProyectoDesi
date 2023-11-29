@@ -1,5 +1,7 @@
 package com.desi.tp2.Controller;
 
+import com.desi.tp2.Model.ModelVuelo.tipoVuelo;
+import com.desi.tp2.Model.ModelVuelo.estadoVuelo;
 import com.desi.tp2.Model.ModelAvion;
 import com.desi.tp2.Model.ModelCiudad;
 import com.desi.tp2.Model.ModelVuelo;
@@ -10,11 +12,10 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +23,20 @@ import java.util.Optional;
 @RequestMapping("/vuelos")
     public class ControllerVuelo {
 
+
+    @Autowired
+    private ServiceCiudad ciudadService;
     @Autowired
     private ServiceVuelo vueloRepository;
     @Autowired
-    private ServiceCiudad ciudadRepository;
-    @Autowired
     private ServiceAvion avionRepository;
+
+    @GetMapping("/")
+    public String mostrarVuelos(Model model) throws Exception {
+        List<ModelVuelo> vuelos = vueloRepository.buscarTodo();
+        model.addAttribute("vuelos", vuelos);
+        return "vuelos";
+    }
 
     @GetMapping("/lista")
     public ModelAndView vuelos() throws Exception {
@@ -42,37 +51,30 @@ import java.util.Optional;
         Optional<ModelVuelo> vuelo = Optional.ofNullable(vueloRepository.buscarPorId(idVuelo));
         return vuelo.map(modelVuelo -> ResponseEntity.ok().body(modelVuelo)).orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @GetMapping("/nuevo") //localhost:8080/vuelos/nuevo
-    public String registrar(ModelMap modelo) throws Exception {
-        ModelVuelo vuelo = new ModelVuelo();
 
-        modelo.addAttribute("vuelo", vuelo);
-        return "crearVuelo.html";
-    }
-    @ModelAttribute("allCiudades")
-    public List<ModelCiudad> getAllCiudades() throws Exception {
-        return this.ciudadRepository.buscarTodo();
-    }
-    @ModelAttribute("allAviones")
-    public List<ModelAvion> getAllAviones() throws Exception {
-        return this.avionRepository.buscarTodo();
+    @GetMapping("/nuevo")
+    ModelAndView nuevoForm() throws Exception {
+
+        return new ModelAndView("crearVuelo")
+                .addObject("vuelo", new ModelVuelo())
+                .addObject("listaDeCiudades", ciudadService.buscarTodo())
+                .addObject("tiposDeVuelos", tipoVuelo.values())
+                .addObject("estadosDeVuelos", estadoVuelo.values())
+                .addObject("listaDeAviones", avionRepository.buscarTodo());
     }
 
     /*@GetMapping("/nuevo")
-    public ModelAndView nuevo() throws Exception {
-        ModelAndView mav = new ModelAndView("crearVuelo");
-        mav.addObject("vuelo", new ModelVuelo());
-        mav.addObject("ciudades", ciudadRepository.buscarTodo());
-        return mav;
-    }
-    @GetMapping("/nuevo")
-    ModelAndView nuevo(){
-        return new ModelAndView("crearVuelo")
-                .addObject("vuelo" , new ModelVuelo());
+    public String registrarVueloForm(Model modelo) throws Exception {
+        ModelVuelo vuelo = new ModelVuelo();
+
+        modelo.addAttribute("vuelo", vuelo);
+        modelo.addAttribute("listaDeCiudades", ciudadService.buscarTodo());
+        modelo.addAttribute("listaDeAviones", avionRepository.buscarTodo());
+        return "crearVuelo";
     }*/
 
     @PostMapping("/nuevo")
-    public ModelAndView crear(ModelVuelo vuelo, RedirectAttributes ra) {
+    public ModelAndView enviarForm(ModelVuelo vuelo, RedirectAttributes ra) {
         ModelAndView mav = new ModelAndView();
         try {
             vueloRepository.guardar(vuelo);
@@ -109,7 +111,7 @@ import java.util.Optional;
     public ResponseEntity<Void> eliminarVuelo(@PathVariable(value = "id") Long idVuelo) throws Exception {
         Optional<ModelVuelo> vuelo = Optional.ofNullable(vueloRepository.buscarPorId(idVuelo));
         if (vuelo.isPresent()) {
-            ciudadRepository.borrar(idVuelo);
+            ciudadService.borrar(idVuelo);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
