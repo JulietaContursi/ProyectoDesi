@@ -52,15 +52,9 @@ public class ControllerTasas {
     }*/
 
     @PostMapping("/editar/{id}")
-    public String actualizart(@PathVariable Long id,
+    public ModelAndView actualizart(@PathVariable Long id,
                                 @ModelAttribute("tasa") ModelCP tasaActualizada,
-                                Model model) throws Exception {
-    /*
-    public ResponseEntity<ModelCP> actualizartasas(@PathVariable(value = "id") Long idComponentePrecio,
-                                                   @RequestBody ModelCP tasaActualizada) throws Exception {
-      */
-            //Optional<ModelCP> tasa = Optional.ofNullable(tasasRepo.buscarPorId(id));
-
+                                Model model, RedirectAttributes ra) throws Exception {
             ModelCP tasaExistente = tasasRepo.buscarPorId(id);
             tasaExistente.setNombreCP(tasaActualizada.getNombreCP());
             tasaExistente.setPrecioCP(tasaActualizada.getPrecioCP());
@@ -68,9 +62,20 @@ public class ControllerTasas {
             tasaExistente.setTasaAN(tasaActualizada.getTasaAN());
             tasaExistente.setTasaAI(tasaActualizada.getTasaAI());
             tasaExistente.setCotizacion(tasaActualizada.getCotizacion());
+            ModelAndView mav = new ModelAndView("tasas");
+
+
+        try {
             tasasRepo.actualizar(tasaExistente, id);
 
-        return "tasas.html";
+            mav.addObject("tasas", tasasRepo.buscarTodo());
+            ra.addFlashAttribute("msgExito","Tasa modificada con éxito!");
+            mav.setViewName("redirect:/tasas/lista");
+        } catch (Exception e) {
+            mav.setViewName("error");
+            mav.addObject("mensaje", "Error al crear la Tasa: " + e.getMessage());
+        }
+        return mav;
     }
 
 

@@ -1,7 +1,7 @@
 package com.desi.tp2.Model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -22,18 +22,21 @@ public class ModelTicket {
 
     private double precio;
 
-    private LocalDate fecha;
+    private LocalDateTime fechaVuelo;
+
+    private LocalDateTime fechaTicket;
 
     public ModelTicket() {
     }
 
-    public ModelTicket(ModelVuelo vuelo, ModelCliente cliente, int asientoFila, char asientoLetra, double precio, LocalDate fecha) {
+    public ModelTicket(ModelVuelo vuelo, ModelCliente cliente, int asientoFila, char asientoLetra, double precio, LocalDateTime fechaVuelo, LocalDateTime fechaTicket) {
         this.vuelo = vuelo;
         this.cliente = cliente;
         this.asientoFila = asientoFila;
         this.asientoLetra = asientoLetra;
         this.precio = precio;
-        this.fecha = fecha;
+        this.fechaVuelo = fechaVuelo;
+        this.fechaTicket = fechaTicket;
     }
 
     public Long getIdTicket() {
@@ -80,23 +83,33 @@ public class ModelTicket {
         this.precio = precio;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public LocalDateTime getFechaVuelo() {
+        return fechaVuelo;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setFechaVuelo(LocalDateTime fechaVuelo) {
+        this.fechaVuelo = fechaVuelo;
+    }
+
+    public LocalDateTime getFechaTicket() {
+        return fechaTicket;
+    }
+
+    public void setFechaTicket(LocalDateTime fechaTicket) {
+        this.fechaTicket = fechaTicket;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ModelTicket that)) return false;
-        return asientoFila == that.asientoFila && asientoLetra == that.asientoLetra && Double.compare(that.precio, precio) == 0 && Objects.equals(idTicket, that.idTicket) && Objects.equals(vuelo, that.vuelo) && Objects.equals(cliente, that.cliente) && Objects.equals(fecha, that.fecha);
+        return asientoFila == that.asientoFila && asientoLetra == that.asientoLetra && Double.compare(that.precio, precio) == 0 && Objects.equals(idTicket, that.idTicket) && Objects.equals(vuelo, that.vuelo) && Objects.equals(cliente, that.cliente) && Objects.equals(fechaVuelo, that.fechaVuelo) && Objects.equals(fechaTicket, that.fechaTicket);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idTicket, vuelo, cliente, asientoFila, asientoLetra, precio, fecha);
+        return Objects.hash(idTicket, vuelo, cliente, asientoFila, asientoLetra, precio, fechaVuelo, fechaTicket);
     }
+
+
 }
