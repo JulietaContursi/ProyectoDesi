@@ -22,6 +22,11 @@ public class ServiceTicket implements ServicioBase<ModelTicket>{
     }
 
     @Override
+    public List<ModelTicket> buscarTodo(ModelTicket x) throws Exception {
+        return null;
+    }
+
+    @Override
     @Transactional
     public ModelTicket buscarPorId(long id) throws Exception {
         Optional<ModelTicket> opt = this.repoTicket.findById(id);

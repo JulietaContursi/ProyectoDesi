@@ -1,6 +1,7 @@
 package com.desi.tp2.Service;
 
 import com.desi.tp2.Model.ModelAvion;
+import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Repository.RepoAvion;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,16 @@ public class ServiceAvion implements ServicioBase<ModelAvion>{
     public List<ModelAvion> buscarTodo() throws Exception {
         List<ModelAvion> aviones = this.repoAvion.findAll();
         return aviones;
+    }
+
+    @Override
+    public List<ModelAvion> buscarTodo(ModelAvion x) throws Exception {
+        return null;
+    }
+
+    public List<ModelCliente> buscarTodo(String nombre) throws Exception {
+        List<ModelAvion> aviones = this.repoAvion.findAllBy(nombre);
+        return null;
     }
 
     @Override

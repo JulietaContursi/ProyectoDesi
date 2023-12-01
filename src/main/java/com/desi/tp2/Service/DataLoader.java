@@ -5,7 +5,6 @@ import com.desi.tp2.Model.ModelCP;
 import com.desi.tp2.Model.ModelCiudad;
 import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +27,7 @@ public class DataLoader implements CommandLineRunner {
         this.RepoVuelo = RepoVuelo;
     }
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // cargamos dos registros en la tabla de aviones
         if(RepoAvion.count()==0){
             RepoAvion.save(new ModelAvion("McFly 2020", 20, 4,"FlyBondy"));
@@ -53,8 +52,10 @@ public class DataLoader implements CommandLineRunner {
             RepoCP.save(new ModelCP("Tasa única",1050.00,21.00,4,2500,950));
         }
         if(RepoCliente.count()==0){
-            RepoCliente.save(new ModelCliente("Medina Mario","Las Heras 2020","medinamario@gmail.com", LocalDate.parse("1990-01-01")
-            , 233243));
+            RepoCliente.save(new ModelCliente("Medina Mario",20256698,"Las Heras 2020","medinamario@gmail.com", LocalDate.parse("1990-01-01"),123456));
+            RepoCliente.save(new ModelCliente("Pedroni Esteban",24887978,"Fcdo. Zuviría 5050","estebanpedroni@gmail.com", LocalDate.parse("1975-10-15"),1245587));
+            RepoCliente.save(new ModelCliente("Rodriguez María",23887978,"Brasil 5647 1 Dpto A","mariarodriguez@gmail.com", LocalDate.parse("1972-04-22"),1112500));
+
         }
 
 

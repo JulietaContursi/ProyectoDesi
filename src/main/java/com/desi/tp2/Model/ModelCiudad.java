@@ -66,6 +66,11 @@ public class ModelCiudad {
     }
 
     @Override
+    public String toString() {
+        return  nombre;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ModelCiudad that)) return false;

@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de clientes</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <h1>Aeropuerto de Sauce Viejo - Clientes</h1>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <a class="navbar-brand" href="/"> Inicio</a>
+
+
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
@@ -18,16 +22,36 @@
         </ul>
     </div>
 </nav>
-<div >
-    <div class="alert alert-success" role="alert" th:if="${msgExito ne null}" >
+<br>
+<!-- Búsqueda de DNI -->
+<div>
+    <form class="form-inLine" th:action="@{/clientes/lista}">
+        <div class="form-group mx-sm-3 mb-2">
+            <label>Filtrar : </label>
+            <input type="number" name="dni" class="form-controL" id="dni" th:value="${dni}" placeholder="Digite el DNI">
+            <input type="submit" class="btn btn-info mb-2" value="Buscar">
+            &nbsp;&nbsp;
+            <input type="button" class="btn btn-secondary mb-2" value="Limpiar" onclick="limpiarCampos()">
+        </div>
+    </form>
+</div>
+
+<div>
+    <div class="alert alert-success" role="alert" th:if="${msgExito ne null}">
         <td th:text="${msgExito}">
         </td>
     </div>
+    <div class="alert alert-danger" role="alert" th:if="${mensaje}">
+        <td th:text="${mensaje}">
+        </td>
+    </div>
+
     <table class="table table-striped">
         <thead>
         <tr>
             <th>ID</th>
             <th>Apellido y Nombre</th>
+            <th>DNI</th>
             <th>Domicilio</th>
             <th>Email por fila</th>
             <th>Fecha de Nacimiento</th>
@@ -39,6 +63,7 @@
         <tr th:each="clientes : ${clientes}">
             <td th:text="${clientes.idCliente}"></td>
             <td th:text="${clientes.apellidoNombre}"></td>
+            <td th:text="${clientes.dni}"></td>
             <td th:text="${clientes.domicilio}"></td>
             <td th:text="${clientes.email}"></td>
             <td th:text="${clientes.fechaNacimiento}"></td>
@@ -47,5 +72,12 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    function limpiarCampos(){
+        window.location = '/clientes/lista';
+    }
+</script>
+
 </body>
 </html>

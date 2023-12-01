@@ -23,6 +23,11 @@ public class ServiceCiudad implements ServicioBase<ModelCiudad>{
     }
 
     @Override
+    public List<ModelCiudad> buscarTodo(ModelCiudad x) throws Exception {
+        return null;
+    }
+
+    @Override
     @Transactional
     public ModelCiudad buscarPorId(long id) throws Exception {
         Optional<ModelCiudad> opt = this.repoCiudad.findById(id);

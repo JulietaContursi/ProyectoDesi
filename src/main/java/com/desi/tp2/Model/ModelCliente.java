@@ -14,6 +14,8 @@ public class ModelCliente {
 
     private String apellidoNombre;
 
+    private int dni;
+
     private String domicilio;
 
     private String email;
@@ -30,13 +32,16 @@ public class ModelCliente {
     public ModelCliente() {
     }
 
-    public ModelCliente(String apellidoNombre, String domicilio, String email, LocalDate fechaNacimiento, int numeroPasaporte) {
+    public ModelCliente(String apellidoNombre, int dni, String domicilio, String email, LocalDate fechaNacimiento, int numeroPasaporte) {
         this.apellidoNombre = apellidoNombre;
+        this.dni = dni;
         this.domicilio = domicilio;
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
         this.numeroPasaporte = numeroPasaporte;
     }
+
+
 
     public long getIdCliente() {
         return idCliente;
@@ -48,6 +53,14 @@ public class ModelCliente {
 
     public void setApellidoNombre(String apellidoNombre) {
         this.apellidoNombre = apellidoNombre;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
     public String getDomicilio() {
@@ -94,11 +107,16 @@ public class ModelCliente {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ModelCliente that)) return false;
-        return idCliente == that.idCliente && numeroPasaporte == that.numeroPasaporte && Objects.equals(apellidoNombre, that.apellidoNombre) && Objects.equals(domicilio, that.domicilio) && Objects.equals(email, that.email) && Objects.equals(fechaNacimiento, that.fechaNacimiento) && Objects.equals(tickets, that.tickets);
+        return getIdCliente() == that.getIdCliente() && getDni() == that.getDni() && getNumeroPasaporte() == that.getNumeroPasaporte() && Objects.equals(getApellidoNombre(), that.getApellidoNombre()) && Objects.equals(getDomicilio(), that.getDomicilio()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getFechaNacimiento(), that.getFechaNacimiento()) && Objects.equals(getTickets(), that.getTickets());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCliente, apellidoNombre, domicilio, email, fechaNacimiento, numeroPasaporte, tickets);
+        return Objects.hash(getIdCliente(), getApellidoNombre(), getDni(), getDomicilio(), getEmail(), getFechaNacimiento(), getNumeroPasaporte(), getTickets());
+    }
+
+    @Override
+    public String toString() {
+        return apellidoNombre;
     }
 }

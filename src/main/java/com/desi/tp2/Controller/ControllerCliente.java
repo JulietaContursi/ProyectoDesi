@@ -4,11 +4,13 @@ import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Service.ServiceCliente;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,9 +22,14 @@ public class ControllerCliente {
 
     @SneakyThrows
     @GetMapping("/lista")
-    public ModelAndView clientes() {
+    public ModelAndView clientes(@Param("dni") Optional<Integer> dni, RedirectAttributes ra) {
         ModelAndView mav = new ModelAndView("clientes");
-        mav.addObject("clientes", clienteRepository.buscarTodo());
+        List<ModelCliente> clientes = clienteRepository.buscarTodo(dni);
+        if (clientes.isEmpty()) {
+            mav.addObject("mensaje", "No se encontraron clientes con el DNI buscado.");
+        } else {
+            mav.addObject("clientes", clientes);
+        }
         return mav;
     }
 
@@ -59,6 +66,7 @@ public class ControllerCliente {
         Optional<ModelCliente> cliente = Optional.ofNullable(clienteRepository.buscarPorId(idCliente));
         if (cliente.isPresent()) {
             ModelCliente clienteExistente = cliente.get();
+            clienteExistente.setApellidoNombre(clienteActualizado.getApellidoNombre());
             clienteExistente.setApellidoNombre(clienteActualizado.getApellidoNombre());
             clienteExistente.setDomicilio(clienteActualizado.getDomicilio());
             clienteExistente.setEmail(clienteExistente.getEmail());

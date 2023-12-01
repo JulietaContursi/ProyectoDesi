@@ -25,6 +25,11 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
     }
 
     @Override
+    public List<ModelVuelo> buscarTodo(ModelVuelo dato) throws Exception {
+        return null;
+    }
+
+    @Override
     @Transactional
     public ModelVuelo buscarPorId(long id) throws Exception {
         Optional<ModelVuelo> opt = this.repoVuelo.findById(id);

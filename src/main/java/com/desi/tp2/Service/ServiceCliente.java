@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Service
 public class ServiceCliente implements ServicioBase<ModelCliente>{
@@ -20,9 +21,24 @@ public class ServiceCliente implements ServicioBase<ModelCliente>{
     @Override
     @Transactional
     public List<ModelCliente> buscarTodo() throws Exception {
+
         List<ModelCliente> clientes = this.repoCliente.findAll();
         return clientes;
     }
+
+    @Override
+    public List<ModelCliente> buscarTodo(ModelCliente x) throws Exception {
+        return null;
+    }
+
+
+    public List<ModelCliente> buscarTodo(Optional<Integer> dni) throws Exception {
+        if(dni.isPresent()) {
+            return repoCliente.findAllBy(dni.get());
+        }
+        return repoCliente.findAll();
+    }
+
 
     @Override
     @Transactional

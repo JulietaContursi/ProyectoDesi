@@ -24,6 +24,11 @@ public class ServiceTasa implements ServicioBase<ModelCP>{
     }
 
     @Override
+    public List<ModelCP> buscarTodo(ModelCP dato) throws Exception {
+        return null;
+    }
+
+    @Override
     @Transactional
     public ModelCP buscarPorId(long id) throws Exception {
         Optional<ModelCP> opt = this.repoCP.findById(id);

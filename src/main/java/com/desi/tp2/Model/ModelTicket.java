@@ -19,7 +19,6 @@ public class ModelTicket {
     private int asientoFila;
 
     private char asientoLetra;
-
     private double precio;
 
     private LocalDateTime fechaVuelo;

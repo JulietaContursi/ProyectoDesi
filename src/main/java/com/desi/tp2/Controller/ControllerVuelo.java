@@ -63,16 +63,6 @@ import java.util.Optional;
                 .addObject("listaDeAviones", avionRepository.buscarTodo());
     }
 
-    /*@GetMapping("/nuevo")
-    public String registrarVueloForm(Model modelo) throws Exception {
-        ModelVuelo vuelo = new ModelVuelo();
-
-        modelo.addAttribute("vuelo", vuelo);
-        modelo.addAttribute("listaDeCiudades", ciudadService.buscarTodo());
-        modelo.addAttribute("listaDeAviones", avionRepository.buscarTodo());
-        return "crearVuelo";
-    }*/
-
     @PostMapping("/nuevo")
     public ModelAndView enviarForm(ModelVuelo vuelo, RedirectAttributes ra) {
         ModelAndView mav = new ModelAndView();

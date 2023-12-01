@@ -38,14 +38,14 @@
     </thead>
       <tbody>
         <tr th:each="vuelo : ${vuelos}">
-                  <td th:text="${vuelo.idVuelo}"></td>
-                  <td th:text="${vuelo.ciudadOrigen}"></td>
-                  <td th:text="${vuelo.ciudadDestino}"></td>
-                  <td th:text="${vuelo.tipo}"></td>
-          <td th:text="${vuelo.precioVuelo}"></td>
-          <td th:text="${vuelo.fechaHora}"></td>
-          <!--  <td th:text="${vuelo.avion}"></td>-->
-          <td th:text="${vuelo.estado}"></td>
+              <td th:text="${vuelo.idVuelo}"></td>
+              <td th:text="${vuelo.ciudadOrigen}"></td>
+              <td th:text="${vuelo.ciudadDestino}"></td>
+              <td th:text="${vuelo.tipo}"></td>
+              <td th:text="${vuelo.precioVuelo}"></td>
+              <td th:text="${vuelo.fechaHora}"></td>
+              <td th:text="${vuelo.avion}"></td>
+              <td th:text="${vuelo.estado}"></td>
         </tr>
       </tbody>
   </table>
