@@ -1,5 +1,6 @@
 package com.desi.tp2.Repository;
 
+import com.desi.tp2.Model.ModelAvion;
 import com.desi.tp2.Model.ModelVuelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +16,8 @@ public interface RepoVuelo extends JpaRepository <ModelVuelo, Long>{
 
     @Query(" FROM ModelVuelo v WHERE v.fecha = :fecha ")
     List<ModelVuelo> findVuelosByFecha(@Param("fecha") Optional<LocalDate> fecha);
+
+    @Query(" FROM ModelVuelo v WHERE v.fecha = :fecha AND v.avion = :avion")
+    List<ModelVuelo> findVuelosByFechaAndAvion(@Param("fecha") Optional<LocalDate> fecha, @Param("avion")Optional<ModelAvion> avion);
 
 }

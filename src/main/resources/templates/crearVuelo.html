@@ -57,11 +57,15 @@
                         </select>
                         <br>
                         <label>Precio del Vuelo:</label>
-                        <input type="number" step="10.00" th:field="*{precioVuelo}" class="form-control"/>
+                        <input type="number" step="1.00" th:field="*{precioVuelo}" class="form-control"/>
                         <br>
 
-                        <label>Fecha y Hora:</label>
-                        <input type="datetime-local" th:field="*{fechaHora}" class="form-control"/>
+                        <label>Fecha del vuelo:</label>
+                        <input type="date" th:field="*{fecha}" class="form-control"/>
+                        <br>
+
+                        <label>Hora del vuelo:</label>
+                        <input type="time" th:field="*{hora}" class="form-control"/>
                         <br>
                         <label>Estado del Vuelo:</label>
                         <select th:field="*{estado}" class="form-control" name="Estado" th:placeholder="estado">

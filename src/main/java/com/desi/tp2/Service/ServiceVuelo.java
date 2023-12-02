@@ -1,5 +1,6 @@
 package com.desi.tp2.Service;
 
+import com.desi.tp2.Model.ModelAvion;
 import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Repository.RepoVuelo;
 import jakarta.transaction.Transactional;
@@ -39,6 +40,13 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
     }
 
     public List<ModelVuelo> findVuelosByFecha(Optional<LocalDate> fecha) throws Exception{
+        if(fecha.isPresent()){
+            return repoVuelo.findVuelosByFecha(fecha);
+        }else{
+        } return repoVuelo.findAll();
+    }
+
+    public List<ModelVuelo> findVuelosByFechaAndAvion(Optional<LocalDate> fecha, Optional<ModelAvion> avion) throws Exception{
         if(fecha.isPresent()){
             return repoVuelo.findVuelosByFecha(fecha);
         }else{

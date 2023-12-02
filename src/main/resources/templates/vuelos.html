@@ -37,6 +37,10 @@
     <td th:text="${msgError}">
     </td>
   </div>
+  <div class="alert alert-alert" role="alert" th:if="${msgExito ne null}" >
+    <td th:text="${msgExito}">
+    </td>
+  </div>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -45,7 +49,8 @@
         <th>Ciudad Destino</th>
         <th>Tipo de Vuelo</th>
         <th>Precio de Vuelo</th>
-        <th>Fecha y Hora</th>
+        <th>Fecha</th>
+        <th>Hora</th>
         <th>Avión</th>
         <th>Estado del Vuelo</th>
       </tr>
@@ -58,6 +63,7 @@
               <td th:text="${vuelo.tipo}"></td>
               <td th:text="${vuelo.precioVuelo}"></td>
               <td th:text="${vuelo.fecha}"></td>
+              <td th:text="${vuelo.hora}"></td>
               <td th:text="${vuelo.avion}"></td>
               <td th:text="${vuelo.estado}"></td>
         </tr>

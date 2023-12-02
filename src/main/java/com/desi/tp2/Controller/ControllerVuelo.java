@@ -95,15 +95,24 @@ import java.util.Optional;
     }
 
     @PostMapping("/nuevo")
-    public ModelAndView enviarForm(ModelVuelo vuelo, RedirectAttributes ra) {
+    public ModelAndView enviarForm(ModelVuelo vuelo, RedirectAttributes ra) throws Exception {
         ModelAndView mav = new ModelAndView();
+        Optional<LocalDate> fecha = Optional.ofNullable(vuelo.getFecha());
+        Optional<ModelAvion> avion = Optional.ofNullable(vuelo.getAvion());
+        List<ModelVuelo> vuelos = vueloRepository.findVuelosByFechaAndAvion(fecha, avion);
+
         try {
-            vueloRepository.guardar(vuelo);
-            ra.addFlashAttribute("msgExito","Vuelo creado con éxito!");
-            mav.setViewName("redirect:/vuelos/lista");
+            if(vuelos.isEmpty()){
+                vueloRepository.guardar(vuelo);
+                ra.addFlashAttribute("msgExito","Vuelo creado con éxito!");
+                mav.setViewName("redirect:/vuelos/lista");
+            }else{
+                ra.addFlashAttribute("msgError", "No se puede creaer éste vuelo porque el avión ya se utiliza ese día. ");
+                mav.setViewName("redirect:/vuelos/lista");
+            }
         } catch (Exception e) {
             mav.setViewName("error");
-            mav.addObject("mensaje", "Error al crear el vuelo: " + e.getMessage());
+            mav.addObject("msgError", "Error al crear el vuelo: " + e.getMessage());
         }
         return mav;
     }

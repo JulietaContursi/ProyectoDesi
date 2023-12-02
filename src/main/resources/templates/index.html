@@ -22,7 +22,7 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav">
-         <!--   <a class="nav-link active" href="#">Inicio <span class="sr-only">(current)</span></a> -->
+            <a class="nav-link active d-none" href="#">Inicio <span class="sr-only">(current)</span></a>
             <a class="nav-link" th:href="@{/ciudades/lista}">Ciudades</a>
             <a class="nav-link" th:href="@{/vuelos/lista}">Vuelos</a>
             <a class="nav-link" th:href="@{/tasas/lista}">Tasas</a>
@@ -34,7 +34,9 @@
         </div>
     </div>
 </nav>
-<section class="fondo-nav">
+<div class="container-fluid p-0">
+    <img th:src="@{/ASV.jpeg}" class="img-fluid" alt="Imagen Aeropuerto" />
+</div>
 </section>
 </body>
 </html>
