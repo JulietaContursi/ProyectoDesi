@@ -1,13 +1,15 @@
 package com.desi.tp2.Service;
 
-import com.desi.tp2.Model.ModelCiudad;
 import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Repository.RepoVuelo;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Optional.*;
 
 @Service
 public class ServiceVuelo implements ServicioBase<ModelVuelo>{
@@ -34,6 +36,13 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
     public ModelVuelo buscarPorId(long id) throws Exception {
         Optional<ModelVuelo> opt = this.repoVuelo.findById(id);
         return opt.get();
+    }
+
+    public List<ModelVuelo> findVuelosByFecha(Optional<LocalDate> fecha) throws Exception{
+        if(fecha.isPresent()){
+            return repoVuelo.findVuelosByFecha(fecha);
+        }else{
+        } return repoVuelo.findAll();
     }
 
     @Override

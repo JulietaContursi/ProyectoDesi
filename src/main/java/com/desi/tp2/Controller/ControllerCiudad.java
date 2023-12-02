@@ -58,7 +58,7 @@ import java.util.Optional;
         }
 
 
-        @PutMapping("/{id}")
+        @PutMapping("/editar/{id}")
         public ResponseEntity<ModelCiudad> actualizarCiudad(@PathVariable(value = "id") Long idCiudad,
                                                        @RequestBody ModelCiudad ciudadActualizada) throws Exception {
             Optional<ModelCiudad> ciudad = Optional.ofNullable(ciudadRepository.buscarPorId(idCiudad));

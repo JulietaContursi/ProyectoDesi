@@ -18,9 +18,23 @@
     </ul>
   </div>
 </nav>
+
+<!-- Búsqueda de Vuelos -->
 <div>
-  <div class="alert alert-success" role="alert" th:if="${msgExito ne null}" >
-    <td th:text="${msgExito}">
+  <form class="form-inLine" th:action="@{/vuelos/lista}">
+    <div class="form-group mx-sm-3 mb-2">
+      <label>Filtrar : </label>
+      <input type="date" name="fecha" class="form-controL" id="inicio" th:value="${fecha}" placeholder="Seleccione la fecha">
+      <input type="submit" class="btn btn-info mb-2" value="Buscar">
+      &nbsp;&nbsp;
+      <input type="button" class="btn btn-secondary mb-2" value="Limpiar" onclick="limpiarCampos()">
+    </div>
+  </form>
+</div>
+
+<div>
+  <div class="alert alert-danger" role="alert" th:if="${msgError ne null}" >
+    <td th:text="${msgError}">
     </td>
   </div>
   <table class="table table-striped">
@@ -43,12 +57,17 @@
               <td th:text="${vuelo.ciudadDestino}"></td>
               <td th:text="${vuelo.tipo}"></td>
               <td th:text="${vuelo.precioVuelo}"></td>
-              <td th:text="${vuelo.fechaHora}"></td>
+              <td th:text="${vuelo.fecha}"></td>
               <td th:text="${vuelo.avion}"></td>
               <td th:text="${vuelo.estado}"></td>
         </tr>
       </tbody>
   </table>
 </div>
+<script type="text/javascript">
+  function limpiarCampos(){
+    window.location = '/vuelos/lista';
+  }
+</script>
 </body>
 </html>

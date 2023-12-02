@@ -100,7 +100,7 @@ import java.util.Optional;
             vueloExistente.setCiudadDestino(vueloActualizado.getCiudadDestino());
             vueloExistente.setTipo(vueloActualizado.getTipo());
             vueloExistente.setPrecioVuelo(vueloActualizado.getPrecioVuelo());
-            vueloExistente.setFechaHora(vueloActualizado.getFechaHora());
+            vueloExistente.setFecha(vueloActualizado.getFecha());
             vueloExistente.setAvion(vueloActualizado.getAvion());
             vueloExistente.setEstado(vueloActualizado.getEstado());
 

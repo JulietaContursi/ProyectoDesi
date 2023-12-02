@@ -1,5 +1,6 @@
 package com.desi.tp2.Controller;
 
+import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Model.ModelVuelo.tipoVuelo;
 import com.desi.tp2.Model.ModelVuelo.estadoVuelo;
 import com.desi.tp2.Model.ModelAvion;
@@ -10,12 +11,18 @@ import com.desi.tp2.Service.ServiceCiudad;
 import com.desi.tp2.Service.ServiceVuelo;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,11 +45,37 @@ import java.util.Optional;
         return "vuelos";
     }
 
+/* getmapping original funcionando
     @GetMapping("/lista")
     public ModelAndView vuelos() throws Exception {
             ModelAndView mav = new ModelAndView("vuelos");
             mav.addObject("vuelos", vueloRepository.buscarTodo());
          return mav;
+    }
+*/
+
+    @SneakyThrows
+    @GetMapping("/lista")
+    public ModelAndView vuelos(@RequestParam("fecha")
+                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> fechaOpt,
+                               RedirectAttributes ra) {
+        ModelAndView mav = new ModelAndView("vuelos");
+
+        if (fechaOpt.isPresent()) {
+            LocalDate fecha = fechaOpt.get();
+
+            List<ModelVuelo> vuelos = vueloRepository.findVuelosByFecha(Optional.of(fecha));
+            if (vuelos.isEmpty()) {
+                mav.addObject("msgError", "No se encontraron vuelos para esta fecha.");
+            } else {
+                mav.addObject("vuelos", vuelos);
+            }
+        } else {
+            List<ModelVuelo> vuelos = vueloRepository.buscarTodo();
+            mav.addObject("vuelos", vuelos);
+        }
+
+        return mav;
     }
 
     @SneakyThrows
@@ -87,7 +120,7 @@ import java.util.Optional;
             vueloExistente.setCiudadDestino(vueloActualizado.getCiudadDestino());
             vueloExistente.setTipo(vueloActualizado.getTipo());
             vueloExistente.setPrecioVuelo(vueloActualizado.getPrecioVuelo());
-            vueloExistente.setFechaHora(vueloActualizado.getFechaHora());
+            vueloExistente.setFecha(vueloActualizado.getFecha());
             vueloExistente.setAvion(vueloActualizado.getAvion());
             vueloExistente.setEstado(vueloActualizado.getEstado());
 

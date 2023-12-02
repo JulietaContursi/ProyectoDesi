@@ -11,7 +11,7 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav">
-                    <a class="nav-link" th:href="@{/}">Inicio</a>-->
+                    <a class="nav-link" th:href="@{/}">Inicio</a>
                     <a class="nav-link" th:href="@{/clientes/lista}">Clientes</a>
             </div>
         </div>
@@ -26,6 +26,10 @@
                         <div>
                             <label for="apellidoNombre">Apellido y Nombre:</label>
                             <input type="text" class="form-control" id="apellidoNombre" placeholder="apellidoNombre" th:field="*{apellidoNombre}" required><br>
+                        </div>
+                        <div>
+                            <label for="dni">Nº de DNI:</label>
+                            <input type="number" class="form-control" id="dni" placeholder="dni" th:field="*{dni}" required /><br>
                         </div>
                         <div>
                             <label for="domicilio">Domicilio:</label>

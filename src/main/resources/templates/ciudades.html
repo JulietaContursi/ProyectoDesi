@@ -37,6 +37,12 @@
           <td th:text="${ciudades.idCiudad}"></td>
           <td th:text="${ciudades.nombre}"></td>
           <td th:text="${ciudades.codigoPostal}"></td>
+          <td>
+            <a class="btn btn-primary" th:href="@{'' + ${ciudades.idCiudad}}">Editar</a>
+            &nbsp;
+            <a class="btn btn-primary" th:href="@{'' + ${ciudades.idCiudad}}">Eliminar</a>
+          </td>
+
         </tr>
       </tbody>
     </table>

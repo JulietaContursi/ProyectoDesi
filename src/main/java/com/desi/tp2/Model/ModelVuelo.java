@@ -2,7 +2,8 @@ package com.desi.tp2.Model;
 
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,8 +29,8 @@ public class ModelVuelo {
 
     private double precioVuelo;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime fechaHora;
+
+    private LocalDate fecha;
 
     @ManyToOne(targetEntity = ModelAvion.class)
     private ModelAvion avion;
@@ -47,12 +48,12 @@ public class ModelVuelo {
     public ModelVuelo() {
     }
 
-    public ModelVuelo(ModelCiudad ciudadOrigen, ModelCiudad ciudadDestino, tipoVuelo tipo, double precioVuelo, LocalDateTime fechaHora, ModelAvion avion, estadoVuelo estado, List<ModelTicket> ticket) {
+    public ModelVuelo(ModelCiudad ciudadOrigen, ModelCiudad ciudadDestino, tipoVuelo tipo, double precioVuelo, LocalDate fecha, ModelAvion avion, estadoVuelo estado, List<ModelTicket> ticket) {
         this.ciudadOrigen = ciudadOrigen;
         this.ciudadDestino = ciudadDestino;
         this.tipo = tipo;
         this.precioVuelo = precioVuelo;
-        this.fechaHora = fechaHora;
+        this.fecha = fecha;
         this.avion = avion;
         this.estado = estado;
         this.ticket = ticket;
@@ -94,12 +95,11 @@ public class ModelVuelo {
         this.precioVuelo = precioVuelo;
     }
 
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
+    public LocalDate getFecha() {
+        return fecha;
     }
-
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     public ModelAvion getAvion() {
@@ -130,12 +130,26 @@ public class ModelVuelo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ModelVuelo vuelo)) return false;
-        return getIdVuelo() == vuelo.getIdVuelo() && Double.compare(vuelo.getPrecioVuelo(), getPrecioVuelo()) == 0 && Objects.equals(getCiudadOrigen(), vuelo.getCiudadOrigen()) && Objects.equals(getCiudadDestino(), vuelo.getCiudadDestino()) && getTipo() == vuelo.getTipo() && Objects.equals(getFechaHora(), vuelo.getFechaHora()) && Objects.equals(getAvion(), vuelo.getAvion()) && getEstado() == vuelo.getEstado() && Objects.equals(getTicket(), vuelo.getTicket());
+        return getIdVuelo() == vuelo.getIdVuelo() && Double.compare(vuelo.getPrecioVuelo(),
+                getPrecioVuelo()) == 0 && Objects.equals(getCiudadOrigen(),
+                vuelo.getCiudadOrigen()) && Objects.equals(getCiudadDestino(),
+                vuelo.getCiudadDestino()) && getTipo() == vuelo.getTipo() && Objects.equals(getFecha(),
+                vuelo.getFecha()) && Objects.equals(getAvion(),
+                vuelo.getAvion()) && getEstado() == vuelo.getEstado() && Objects.equals(getTicket(),
+                vuelo.getTicket());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdVuelo(), getCiudadOrigen(), getCiudadDestino(), getTipo(), getPrecioVuelo(), getFechaHora(), getAvion(), getEstado(), getTicket());
+        return Objects.hash(getIdVuelo(),
+                getCiudadOrigen(),
+                getCiudadDestino(),
+                getTipo(),
+                getPrecioVuelo(),
+                getFecha(),
+                getAvion(),
+                getEstado(),
+                getTicket());
     }
 
     @Override
@@ -146,7 +160,7 @@ public class ModelVuelo {
                 ", ciudadDestino=" + ciudadDestino +
                 ", tipo=" + tipo +
                 ", precioVuelo=" + precioVuelo +
-                ", fechaHora=" + fechaHora +
+                ", fecha=" + fecha +
                 ", avion=" + avion +
                 ", estado=" + estado +
                 ", ticket=" + ticket +
