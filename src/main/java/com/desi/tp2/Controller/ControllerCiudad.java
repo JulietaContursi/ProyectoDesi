@@ -73,16 +73,19 @@ import java.util.Optional;
             }
         }
 
-
-        @SneakyThrows
-        @DeleteMapping("/{id}")
-        public ResponseEntity<Void> eliminarCiudad(@PathVariable(value = "id") Long idCiudad) {
-            Optional<ModelCiudad> ciudad = Optional.ofNullable(ciudadRepository.buscarPorId(idCiudad));
-            if (ciudad.isPresent()) {
-                ciudadRepository.borrar(idCiudad);
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.notFound().build();
+        @GetMapping("/eliminar/{id}")
+        public ModelAndView deleteCity(@PathVariable Long id, RedirectAttributes ra) throws Exception {
+            ModelAndView mav = new ModelAndView();
+            try{
+                ciudadRepository.borrar(id);
+                ra.addFlashAttribute("msgExito","Ciudad eliminada con éxito!");
+                mav.setViewName("redirect:/ciudades/lista");
+            }catch (Exception e) {
+                ra.addFlashAttribute("msgError", "No se puede borrar una ciudad si está siendo utilizada por otro registro. " );
+                mav.setViewName("redirect:/ciudades/lista");
+                mav.addObject("errorCode", e.getMessage()); // para agregar a un log
             }
+            return mav;
         }
+
     }

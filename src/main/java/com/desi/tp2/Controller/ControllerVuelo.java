@@ -37,7 +37,7 @@ import java.util.Optional;
     private ServiceVuelo vueloRepository;
     @Autowired
     private ServiceAvion avionRepository;
-
+/*
     @GetMapping("/")
     public String mostrarVuelos(Model model) throws Exception {
         List<ModelVuelo> vuelos = vueloRepository.buscarTodo();
@@ -45,7 +45,7 @@ import java.util.Optional;
         return "vuelos";
     }
 
-/* getmapping original funcionando
+ getmapping original funcionando
     @GetMapping("/lista")
     public ModelAndView vuelos() throws Exception {
             ModelAndView mav = new ModelAndView("vuelos");
@@ -63,7 +63,6 @@ import java.util.Optional;
 
         if (fechaOpt.isPresent()) {
             LocalDate fecha = fechaOpt.get();
-
             List<ModelVuelo> vuelos = vueloRepository.findVuelosByFecha(Optional.of(fecha));
             if (vuelos.isEmpty()) {
                 mav.addObject("msgError", "No se encontraron vuelos para esta fecha.");
@@ -74,7 +73,6 @@ import java.util.Optional;
             List<ModelVuelo> vuelos = vueloRepository.buscarTodo();
             mav.addObject("vuelos", vuelos);
         }
-
         return mav;
     }
 
@@ -130,7 +128,8 @@ import java.util.Optional;
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/{id}")
+    /*
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarVuelo(@PathVariable(value = "id") Long idVuelo) throws Exception {
         Optional<ModelVuelo> vuelo = Optional.ofNullable(vueloRepository.buscarPorId(idVuelo));
         if (vuelo.isPresent()) {
@@ -139,5 +138,10 @@ import java.util.Optional;
         } else {
             return ResponseEntity.notFound().build();
         }
+    }*/
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<Void> borrar(@PathVariable("id") Long id) throws Exception {
+        vueloRepository.borrar(id);
+        return ResponseEntity.ok().build();
     }
 }

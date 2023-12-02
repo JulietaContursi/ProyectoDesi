@@ -23,6 +23,10 @@
       <td th:text="${msgExito}">
       </td>
     </div>
+    <div class="alert alert-danger" role="alert" th:if="${msgError ne null}" >
+      <td th:text="${msgError}">
+      </td>
+    </div>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -38,9 +42,10 @@
           <td th:text="${ciudades.nombre}"></td>
           <td th:text="${ciudades.codigoPostal}"></td>
           <td>
-            <a class="btn btn-primary" th:href="@{'' + ${ciudades.idCiudad}}">Editar</a>
+            <!-- <a class="btn btn-primary btn-sm" th:href="@{'' + ${ciudades.idCiudad}}">Editar</a> -->
+            <a class="btn btn-primary btn-sm" th:href="@{'' + ${ciudades.idCiudad}}">Editar</a>
             &nbsp;
-            <a class="btn btn-primary" th:href="@{'' + ${ciudades.idCiudad}}">Eliminar</a>
+            <a class="btn btn-danger btn-sm" th:href="@{/ciudades/eliminar/{id}(id=${ciudades.idCiudad})}" method="delete">Eliminar</a>
           </td>
 
         </tr>

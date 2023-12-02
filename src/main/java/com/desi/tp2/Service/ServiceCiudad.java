@@ -56,7 +56,7 @@ public class ServiceCiudad implements ServicioBase<ModelCiudad>{
         Optional<ModelCiudad> opt = this.repoCiudad.findById(id);
         if(!opt.isEmpty()){
             ModelCiudad ciudad = opt.get();
-            this.repoCiudad.save(ciudad);
+            this.repoCiudad.deleteById(id);
         }else{
             throw new Exception();
         }
