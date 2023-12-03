@@ -45,7 +45,7 @@
             <!-- <a class="btn btn-primary btn-sm" th:href="@{'' + ${ciudades.idCiudad}}">Editar</a> -->
             <a class="btn btn-primary btn-sm" th:href="@{'' + ${ciudades.idCiudad}}">Editar</a>
             &nbsp;
-            <a class="btn btn-danger btn-sm" th:href="@{/ciudades/eliminar/{id}(id=${ciudades.idCiudad})}" method="delete">Eliminar</a>
+            <a class="btn btn-danger btn-sm" th:href="@{/ciudades/eliminar/{id}(id=${ciudades.idCiudad})}" method="delete" onclick="return confirm('Quieres borrar la ciudad?')">Eliminar</a>
           </td>
 
         </tr>

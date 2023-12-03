@@ -1,6 +1,7 @@
 package com.desi.tp2.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class ModelVuelo {
     @Enumerated(EnumType.STRING)
     private tipoVuelo tipo;
 
+    @Min(0)
     private double precioVuelo;
 
 
