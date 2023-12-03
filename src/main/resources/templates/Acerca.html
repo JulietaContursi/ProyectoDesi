@@ -1,43 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Cargar Avion</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<title>Informacion del grupo</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 </head>
+
 <body>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="#">Registro de Aviones</a>
-  <!-- Navbar links -->
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <div class="navbar-nav">
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<div class="navbar-nav">
 
-        <a class="nav-link" th:href="@{/}">Inicio</a>
-      <a class="nav-link" th:href="@{/aviones/lista}">Aviones</a>
-    </div>
-  </div>
-</nav>
-<br>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-      <h2 class="text-center">Carga de avion</h2>
-      <div class="card-body">
+				<a class="navbar-brand" th:href="@{/}">Inicio</a>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<div class="container">
 
-        <form>
-          <br>
-          <div >
-
-
-          </div>
-        </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  <br>
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<div class="container mt-5">
+					<h2 class="text-center">Información del Grupo</h2>
+					<br>
+					<br>
+					<div class="card">
+						<div class="card-body">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">Benz Juan Jose</li>
+								<li class="list-group-item">Contursi Julieta</li>
+								<li class="list-group-item">Maidana Gerardo</li>
+								<li class="list-group-item">Vilche Santos</li>
+								
+							</ul>
+							<br>
+								
+						</div>
+					</div>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<br>
 
 </body>
+
 </html>

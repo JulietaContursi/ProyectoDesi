@@ -2,8 +2,6 @@ package com.desi.tp2.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;

@@ -1,64 +1,85 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Editar Tasa</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<title>Editar Tasa</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 </head>
+
 <body>
-  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="#">Valores de Tasas e impuestos</a>
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="navbar-nav">
-          <a class="nav-link" th:href="@{/}">Inicio</a>
-          <a class="nav-link" th:href="@{/tasas/lista}">Tasas</a>
-      </div>
-    </div>
-  </nav>
-  <br>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-        <h2 class="text-center">Tasas e impuestos</h2>
-        <div class="card-body">
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<a class="navbar-brand" href="#">Valores de Tasas e impuestos</a>
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<div class="navbar-nav">
+				<a class="nav-link" th:href="@{/}">Inicio</a>
+				<a class="nav-link" th:href="@{/tasas/lista}">Tasas</a>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h2 class="text-center">Tasas e impuestos</h2>
+				<div class="card-body">
 
-          <form th:action="@{/tasas/editar/1 (id=${tasa.idComponentePrecio})}" th:object="${tasa}" th:method="POST">
-            <br>
-            <div >
-              <label for="nombreCP">Nombre:</label>
-              <input type="text" class="form-control" id="nombreCP" placeholder="NombreCP" th:field="*{nombreCP}" required><br>
+					<form th:action="@{/tasas/editar/1 (id=${tasa.idComponentePrecio})}" th:object="${tasa}"
+						th:method="POST">
+						<br>
+						<div>
+							<label for="nombreCP">Nombre:</label>
+							<input type="text" class="form-control" id="nombreCP" placeholder="NombreCP"
+								th:field="*{nombreCP}" required><br>
 
-              <label for="precioCP">Precio en $ar:</label>
-              <input type="number" class="form-control" id="precioCP" placeholder="precioCP" th:field="*{precioCP}" required><br>
+							<label for="precioCP">Precio en $ar:</label>
+							<input type="number" class="form-control" id="precioCP" placeholder="precioCP"
+								th:field="*{precioCP}" step="0.01" min="0" required onchange="formatoDecimal(this);"> <br>
 
-              <label for="IVA">IVA %:</label>
-              <input type="number" class="form-control" id="IVA" placeholder="IVA" th:field="*{IVA}" required><br>
+							<label for="IVA">IVA %:</label>
+							<input type="number" class="form-control" id="IVA" placeholder="IVA" th:field="*{IVA}"
+								required step="1.00" min="0" max="100"><br>
 
-              <label for="tasaAN">Tasa Aeroportuaria Nacional en $:</label>
-              <input type="number" class="form-control" id="tasaAN" placeholder="tasaAN" th:field="*{tasaAN}" required><br>
+							<label for="tasaAN">Tasa Aeroportuaria Nacional en $:</label>
+							<input type="number" class="form-control" id="tasaAN" placeholder="tasaAN"
+								th:field="*{tasaAN}" step="0.01" min="0" required onchange="formatoDecimal(this);"><br>
 
-              <label for="tasaAI">Tasa Aeroportuaria InterNacional en U$S:</label>
-              <input type="number" class="form-control" id="tasaAI" placeholder="tasaAI" th:field="*{tasaAI}" required><br>
+							<label for="tasaAI">Tasa Aeroportuaria InterNacional en U$S:</label>
+							<input type="number" class="form-control" id="tasaAI" placeholder="tasaAI"
+								th:field="*{tasaAI}" step="0.01" min="0" required onchange="formatoDecimal(this);"> <br>
 
-              <label for="cotizacion">Cotizacion del Dolar:</label>
-              <input type="number" class="form-control" id="cotizacion" placeholder="cotizacion" th:field="*{cotizacion}" required><br>
+							<label for="cotizacion">Cotizacion del Dolar:</label>
+							<input type="number" class="form-control" id="cotizacion" placeholder="cotizacion"
+								th:field="*{cotizacion}" required step="1.00" min="0"><br>
 
-              <!--cards DolarHoy Oficial/blue-->
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <div><iframe style="width:250px;height:260px;border-radius:10px;box-shadow:2px 4px 4px rgb(0 0 0 / 25%); display:flex;justify-content:center;border:1px solid #bcbcbc" src="https://dolarhoy.com/i/cotizaciones/dolar-bancos-y-casas-de-cambio" frameborder="0"></iframe></div><br>
-                  <div><iframe style="width:230px;height:260px;border-radius:10px;box-shadow:2px 4px 4px rgb(0 0 0 / 25%); display:flex;justify-content:center;border:1px solid #bcbcbc" src="https://dolarhoy.com/i/cotizaciones/dolar-blue" frameborder="0"></iframe></div><br>
-              </div><br>
+							<!--cards DolarHoy Oficial/blue-->
+							<div style="display: flex; justify-content: space-between; align-items: center;">
+								<div><iframe
+										style="width:250px;height:260px;border-radius:10px;box-shadow:2px 4px 4px rgb(0 0 0 / 25%); display:flex;justify-content:center;border:1px solid #bcbcbc"
+										src="https://dolarhoy.com/i/cotizaciones/dolar-bancos-y-casas-de-cambio"
+										frameborder="0"></iframe></div><br>
+								<div><iframe
+										style="width:230px;height:260px;border-radius:10px;box-shadow:2px 4px 4px rgb(0 0 0 / 25%); display:flex;justify-content:center;border:1px solid #bcbcbc"
+										src="https://dolarhoy.com/i/cotizaciones/dolar-blue" frameborder="0"></iframe>
+								</div><br>
+							</div><br>
 
-              <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar tasas</button>
-            </div>
-          </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  <br>
-
+							<button type="submit" class="btn btn-primary btn-lg btn-block">Guardar tasas</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<script>
+		function formatoDecimal(input) {
+    		input.value = parseFloat(input.value).toFixed(2);
+		}
+	</script>
 </body>
+
 </html>

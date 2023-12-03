@@ -1,6 +1,9 @@
 package com.desi.tp2.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+
 import java.util.Objects;
 
 @Entity
@@ -11,16 +14,21 @@ public class ModelCP {
 
     private String nombreCP;
 
+    @Min(0)
     private double precioCP;
 
+    @Min(0)@Max(100)
     private double IVA;
 
+    @Min(0)
     @Column(nullable = false )
     private double tasaAI;
 
+    @Min(0)
     @Column( nullable = false )
     private double tasaAN;
 
+    @Min(0)
     private int cotizacion;
 
     public ModelCP() {
