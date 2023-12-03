@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+    <title>Crear Vuelo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="#"> Registro de Clientes</a>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav">
+                    <a class="nav-link" th:href="@{/}">Inicio</a>
+                    <a class="nav-link" th:href="@{/clientes/lista}">Clientes</a>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <h2 class="text-center">Carga de cliente</h2>
+                <div class="card-body">
+                    <form th:action="@{/clientes/nuevo}" th:object="${cliente}" method="POST">
+                        <div>
+                            <label for="apellidoNombre">Apellido y Nombre:</label>
+                            <input type="text" class="form-control" id="apellidoNombre" placeholder="apellidoNombre" th:field="*{apellidoNombre}" required><br>
+                        </div>
+                        <div>
+                            <label for="dni">Nº de DNI:</label>
+                            <input type="number" class="form-control" id="dni" placeholder="dni" th:field="*{dni}" required /><br>
+                        </div>
+                        <div>
+                            <label for="domicilio">Domicilio:</label>
+                            <input type="text" class="form-control" id="domicilio" placeholder="domicilio" th:field="*{domicilio}" required><br>
+                        </div>
+                        <div>
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="email" th:field="*{email}" required><br>
+                        </div>
+                        <div>
+                            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                            <input type="date" class="form-control" id="fechaNacimiento" placeholder="fechaNacimiento" th:field="*{fechaNacimiento}" required /><br>
+                        </div>
+                        <div>
+                            <label for="numeroPasaporte">Nº de Pasaporte:</label>
+                            <input type="number" class="form-control" id="numeroPasaporte" placeholder="numeroPasaporte" th:field="*{numeroPasaporte}" required /><br>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Cargar Cliente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

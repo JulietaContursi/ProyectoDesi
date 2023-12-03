@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de Vuelos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <h1>Aeropuerto de Sauce Viejo - Vuelos</h1>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="/"> Inicio</a>
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/vuelos/nuevo}">Crear vuelo</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Búsqueda de Vuelos -->
+<div>
+  <form class="form-inLine" th:action="@{/vuelos/lista}">
+    <div class="form-group mx-sm-3 mb-2">
+      <label>Filtrar : </label>
+      <input type="date" name="fecha" class="form-controL" id="inicio" th:value="${fecha}" placeholder="Seleccione la fecha">
+      <input type="submit" class="btn btn-info mb-2" value="Buscar">
+      &nbsp;&nbsp;
+      <input type="button" class="btn btn-secondary mb-2" value="Limpiar" onclick="limpiarCampos()">
+    </div>
+  </form>
+</div>
+
+<div>
+  <div class="alert alert-danger" role="alert" th:if="${msgError ne null}" >
+    <td th:text="${msgError}">
+    </td>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ciudad Origen</th>
+        <th>Ciudad Destino</th>
+        <th>Tipo de Vuelo</th>
+        <th>Precio de Vuelo</th>
+        <th>Fecha y Hora</th>
+        <th>Avión</th>
+        <th>Estado del Vuelo</th>
+      </tr>
+    </thead>
+      <tbody>
+        <tr th:each="vuelo : ${vuelos}">
+              <td th:text="${vuelo.idVuelo}"></td>
+              <td th:text="${vuelo.ciudadOrigen}"></td>
+              <td th:text="${vuelo.ciudadDestino}"></td>
+              <td th:text="${vuelo.tipo}"></td>
+              <td th:text="${vuelo.precioVuelo}"></td>
+              <td th:text="${vuelo.fecha}"></td>
+              <td th:text="${vuelo.avion}"></td>
+              <td th:text="${vuelo.estado}"></td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+<script type="text/javascript">
+  function limpiarCampos(){
+    window.location = '/vuelos/lista';
+  }
+</script>
+</body>
+</html>

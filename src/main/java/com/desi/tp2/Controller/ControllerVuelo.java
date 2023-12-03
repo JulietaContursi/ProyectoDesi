@@ -9,7 +9,6 @@ import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Service.ServiceAvion;
 import com.desi.tp2.Service.ServiceCiudad;
 import com.desi.tp2.Service.ServiceVuelo;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -54,11 +53,10 @@ import java.util.Optional;
     }
 */
 
-    @SneakyThrows
     @GetMapping("/lista")
     public ModelAndView vuelos(@RequestParam("fecha")
                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> fechaOpt,
-                               RedirectAttributes ra) {
+                               RedirectAttributes ra) throws Exception {
         ModelAndView mav = new ModelAndView("vuelos");
 
         if (fechaOpt.isPresent()) {
@@ -76,9 +74,8 @@ import java.util.Optional;
         return mav;
     }
 
-    @SneakyThrows
     @GetMapping("/{id}")
-    public ResponseEntity<ModelVuelo> obtenerVueloPorId(@PathVariable(value = "id") Long idVuelo) {
+    public ResponseEntity<ModelVuelo> obtenerVueloPorId(@PathVariable(value = "id") Long idVuelo) throws Exception {
         Optional<ModelVuelo> vuelo = Optional.ofNullable(vueloRepository.buscarPorId(idVuelo));
         return vuelo.map(modelVuelo -> ResponseEntity.ok().body(modelVuelo)).orElseGet(() -> ResponseEntity.notFound().build());
     }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de ciudades</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <h1>Aeropuerto de Sauce Viejo - Ciudades</h1>
+</head>
+<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="/"> Inicio</a>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/ciudades/nuevo}">Crear Ciudad</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div >
+    <div class="alert alert-success" role="alert" th:if="${msgExito ne null}" >
+      <td th:text="${msgExito}">
+      </td>
+    </div>
+    <div class="alert alert-danger" role="alert" th:if="${msgError ne null}" >
+      <td th:text="${msgError}">
+      </td>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Código Postal</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- Itera sobre la lista de ciudades y muestra cada una en una fila de la tabla -->
+        <tr th:each="ciudades : ${ciudades}">
+          <td th:text="${ciudades.idCiudad}"></td>
+          <td th:text="${ciudades.nombre}"></td>
+          <td th:text="${ciudades.codigoPostal}"></td>
+          <td>
+            <!-- <a class="btn btn-primary btn-sm" th:href="@{'' + ${ciudades.idCiudad}}">Editar</a> -->
+            <a class="btn btn-primary btn-sm" th:href="@{'' + ${ciudades.idCiudad}}">Editar</a>
+            &nbsp;
+            <a class="btn btn-danger btn-sm" th:href="@{/ciudades/eliminar/{id}(id=${ciudades.idCiudad})}" method="delete">Eliminar</a>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

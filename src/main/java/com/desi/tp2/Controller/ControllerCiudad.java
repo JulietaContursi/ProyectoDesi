@@ -2,7 +2,6 @@ package com.desi.tp2.Controller;
 
 import com.desi.tp2.Model.ModelCiudad;
 import com.desi.tp2.Service.ServiceCiudad;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +21,17 @@ import java.util.Optional;
             return new ModelAndView("index");
         }
 
-        @SneakyThrows
+
         @GetMapping("/lista")
-        public ModelAndView ciudades() {
+        public ModelAndView ciudades() throws Exception {
             ModelAndView mav = new ModelAndView("ciudades");
             mav.addObject("ciudades", ciudadRepository.buscarTodo());
             return mav;
         }
 
-        @SneakyThrows
+
         @GetMapping("/{id}")
-        public ResponseEntity<ModelCiudad> obtenerCiudadPorId(@PathVariable(value = "id") Long idCiudad) {
+        public ResponseEntity<ModelCiudad> obtenerCiudadPorId(@PathVariable(value = "id") Long idCiudad) throws Exception {
             Optional<ModelCiudad> ciudad = Optional.ofNullable(ciudadRepository.buscarPorId(idCiudad));
             return ciudad.map(modelCiudad -> ResponseEntity.ok().body(modelCiudad)).orElseGet(() -> ResponseEntity.notFound().build());
         }

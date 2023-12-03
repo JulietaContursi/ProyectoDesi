@@ -2,7 +2,6 @@ package com.desi.tp2.Controller;
 
 import com.desi.tp2.Model.ModelAvion;
 import com.desi.tp2.Service.ServiceAvion;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +16,17 @@ public class ControllerAvion {
     @Autowired
     private ServiceAvion avionRepository;
 
-    @SneakyThrows
+
     @GetMapping("/lista")
-    public ModelAndView aviones() {
+    public ModelAndView aviones() throws Exception {
         ModelAndView mav = new ModelAndView("aviones");
         mav.addObject("aviones", avionRepository.buscarTodo());
         return mav;
     }
 
-    @SneakyThrows
+
     @GetMapping("/{id}") //buscan un avión por su id en el avionRepository y devuelven una ResponseEntity con diferentes códigos de estado dependiendo de si se encontró o no el avión.
-    public ResponseEntity<ModelAvion> obtenerAvionPorId(@PathVariable(value = "id") Long idAvion) {
+    public ResponseEntity<ModelAvion> obtenerAvionPorId(@PathVariable(value = "id") Long idAvion) throws Exception {
         Optional<ModelAvion> avion = Optional.ofNullable(avionRepository.buscarPorId(idAvion));
         //Se crea un Optional que envuelve el resultado de la búsqueda de un avión por su id en el avionRepository. Si el avión existe, se guarda en el Optional; de lo contrario, el Optional estará vacío.
         return avion.map(modelAvion -> ResponseEntity.ok().body(modelAvion)).orElseGet(() -> ResponseEntity.notFound().build());
@@ -68,9 +67,9 @@ public class ControllerAvion {
             return ResponseEntity.notFound().build();
         }
     }
-    @SneakyThrows
+    
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarAvion(@PathVariable(value = "id") Long idAvion) {
+    public ResponseEntity<Void> eliminarAvion(@PathVariable(value = "id") Long idAvion) throws Exception {
         Optional<ModelAvion> avion = Optional.ofNullable(avionRepository.buscarPorId(idAvion));
         if (avion.isPresent()) {
             avionRepository.borrar(idAvion);

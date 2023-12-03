@@ -2,7 +2,6 @@ package com.desi.tp2.Controller;
 
 import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Service.ServiceCliente;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +19,8 @@ public class ControllerCliente {
     @Autowired
     private ServiceCliente clienteRepository;
 
-    @SneakyThrows
     @GetMapping("/lista")
-    public ModelAndView clientes(@Param("dni") Optional<Integer> dni, RedirectAttributes ra) {
+    public ModelAndView clientes(@Param("dni") Optional<Integer> dni, RedirectAttributes ra) throws Exception {
         ModelAndView mav = new ModelAndView("clientes");
         List<ModelCliente> clientes = clienteRepository.buscarTodo(dni);
         if (clientes.isEmpty()) {
@@ -33,9 +31,8 @@ public class ControllerCliente {
         return mav;
     }
 
-    @SneakyThrows
     @GetMapping("/{id}") //buscan un cliente por su id en el clienteRepository y devuelven una ResponseEntity con diferentes códigos de estado dependiendo de si se encontró o no el cliente.
-    public ResponseEntity<ModelCliente> obtenerClientePorId(@PathVariable(value = "id") Long idCliente) {
+    public ResponseEntity<ModelCliente> obtenerClientePorId(@PathVariable(value = "id") Long idCliente) throws Exception {
         Optional<ModelCliente> cliente = Optional.ofNullable(clienteRepository.buscarPorId(idCliente));
         //Se crea un Optional que envuelve el resultado de la búsqueda de un cliente por su id en el clienteRepository. Si el cliente existe, se guarda en el Optional; de lo contrario, el Optional estará vacío.
         return cliente.map(modelCliente -> ResponseEntity.ok().body(modelCliente)).orElseGet(() -> ResponseEntity.notFound().build());
@@ -77,9 +74,9 @@ public class ControllerCliente {
             return ResponseEntity.notFound().build();
         }
     }
-    @SneakyThrows
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarCliente(@PathVariable(value = "id") Long idCliente) {
+    public ResponseEntity<Void> eliminarCliente(@PathVariable(value = "id") Long idCliente) throws Exception {
         Optional<ModelCliente> cliente = Optional.ofNullable(clienteRepository.buscarPorId(idCliente));
         if (cliente.isPresent()) {
             clienteRepository.borrar(idCliente);
