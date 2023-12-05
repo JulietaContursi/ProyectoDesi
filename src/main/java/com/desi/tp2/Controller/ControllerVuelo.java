@@ -7,6 +7,7 @@ import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Service.ServiceAvion;
 import com.desi.tp2.Service.ServiceCiudad;
 import com.desi.tp2.Service.ServiceVuelo;
+import com.desi.tp2.Service.ServiceAsiento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -30,6 +33,9 @@ import java.util.Optional;
     private ServiceVuelo vueloRepository;
     @Autowired
     private ServiceAvion avionRepository;
+    @Autowired
+    private ServiceAsiento asientoRepository;
+    
 /*
     @GetMapping("/")
     public String mostrarVuelos(Model model) throws Exception {
@@ -55,14 +61,35 @@ import java.util.Optional;
 
         if (fechaOpt.isPresent()) {
             LocalDate fecha = fechaOpt.get();
-            List<ModelVuelo> vuelos = vueloRepository.findVuelosByFecha(Optional.of(fecha));
+            List<ModelVuelo> vuelos;
+            
+            vuelos = vueloRepository.ordenarPorFechaHora(vueloRepository.findVuelosByFecha(Optional.of(fecha)));
+            
+            
+            vuelos.sort(null);
+            
+            
+            
             if (vuelos.isEmpty()) {
                 mav.addObject("msgError", "No se encontraron vuelos para esta fecha.");
             } else {
-                mav.addObject("vuelos", vuelos);
+            	
+            	Map<ModelVuelo, Long> asientosVendidosPorVuelo = new HashMap<>();
+                for (ModelVuelo vuelo : vuelos) {
+                    Long asientosVendidos = asientoRepository.cantidadDeAsientoVendidos(vuelo);
+                    asientosVendidosPorVuelo.put(vuelo, asientosVendidos);
+                    System.out.println("===================================");
+                    System.out.println("===> Asientos vendidos: " + asientosVendidos);
+                    System.out.println("===================================");
+                }
+                mav.addObject("asientosVendidosPorVuelo", asientosVendidosPorVuelo);
+            	mav.addObject("vuelos", vuelos);
             }
         } else {
-            List<ModelVuelo> vuelos = vueloRepository.buscarTodo();
+            List<ModelVuelo> vuelos;
+            
+            vuelos = vueloRepository.ordenarPorFechaHora(vueloRepository.buscarTodo());
+            
             mav.addObject("vuelos", vuelos);
         }
         return mav;
@@ -128,17 +155,7 @@ import java.util.Optional;
             return ResponseEntity.notFound().build();
         }
     }
-    /*
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminarVuelo(@PathVariable(value = "id") Long idVuelo) throws Exception {
-        Optional<ModelVuelo> vuelo = Optional.ofNullable(vueloRepository.buscarPorId(idVuelo));
-        if (vuelo.isPresent()) {
-            ciudadService.borrar(idVuelo);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }*/
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> borrar(@PathVariable("id") Long id) throws Exception {
         vueloRepository.borrar(id);

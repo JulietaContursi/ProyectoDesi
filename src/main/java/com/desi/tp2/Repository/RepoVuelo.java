@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface RepoVuelo extends JpaRepository <ModelVuelo, Long>{
 
-    @Query(" FROM ModelVuelo v WHERE v.fecha = :fecha ")
+    @Query(" FROM ModelVuelo v WHERE v.fecha = :fecha ORDER BY v.fecha")
     List<ModelVuelo> findVuelosByFecha(@Param("fecha") Optional<LocalDate> fecha);
 
     @Query(" FROM ModelVuelo v WHERE v.fecha = :fecha AND v.avion = :avion")

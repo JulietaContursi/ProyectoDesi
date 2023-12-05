@@ -16,9 +16,13 @@ public class ModelTicket {
     @ManyToOne(targetEntity = ModelCliente.class)
     private ModelCliente cliente;
 
+    @ManyToOne(targetEntity = ModelAvion.class)
+    private ModelAvion avion;
+    
     private int asientoFila;
 
     private char asientoLetra;
+    
     private double precio;
 
     private LocalDateTime fechaVuelo;

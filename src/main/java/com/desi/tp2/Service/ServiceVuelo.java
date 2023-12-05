@@ -2,22 +2,31 @@ package com.desi.tp2.Service;
 
 import com.desi.tp2.Model.ModelAvion;
 import com.desi.tp2.Model.ModelVuelo;
+import com.desi.tp2.Repository.RepoAsiento;
 import com.desi.tp2.Repository.RepoVuelo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.Optional.*;
 
 @Service
 public class ServiceVuelo implements ServicioBase<ModelVuelo>{
     private final RepoVuelo repoVuelo;
+    private RepoAsiento repoAsiento;
 
     public ServiceVuelo(RepoVuelo repoVuelo) {
         this.repoVuelo = repoVuelo;
+		this.repoAsiento = repoAsiento;
+    }
+    public void ServiceAsiento(RepoAsiento repoAsiento) {
+    	this.repoAsiento = repoAsiento;
     }
 
     @Override
@@ -33,7 +42,6 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
     }
 
     @Override
-    @Transactional
     public ModelVuelo buscarPorId(long id) throws Exception {
         Optional<ModelVuelo> opt = this.repoVuelo.findById(id);
         return opt.get();
@@ -41,14 +49,17 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
 
     public List<ModelVuelo> findVuelosByFecha(Optional<LocalDate> fecha) throws Exception{
         if(fecha.isPresent()){
-            return repoVuelo.findVuelosByFecha(fecha);
+        	List<ModelVuelo> lista = repoVuelo.findVuelosByFecha(fecha);
+            return lista.stream()
+                    .sorted(Comparator.comparing(ModelVuelo::getFecha))
+                    .collect(Collectors.toList());
         }else{
         } return repoVuelo.findAll();
     }
 
     public List<ModelVuelo> findVuelosByFechaAndAvion(Optional<LocalDate> fecha, Optional<ModelAvion> avion) throws Exception{
-        if(fecha.isPresent()){
-            return repoVuelo.findVuelosByFecha(fecha);
+        if(fecha.isPresent() && avion.isPresent()){
+            return repoVuelo.findVuelosByFechaAndAvion(fecha, avion);
         }else{
         } return repoVuelo.findAll();
     }
@@ -80,5 +91,18 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
             throw new Exception();
         }
         return true;
+    }
+    
+    public List<ModelVuelo> ordenarPorFechaHora(List<ModelVuelo> vuelos){
+    	vuelos.sort((v1, v2) -> {
+            int comparacionFecha = v1.getFecha().compareTo(v2.getFecha());
+            if (comparacionFecha == 0) {
+                return v1.getHora().compareTo(v2.getHora());
+            } else {
+                return comparacionFecha;
+            }
+        });
+		return vuelos;
+    	
     }
 }

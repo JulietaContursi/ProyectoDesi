@@ -32,11 +32,11 @@
 						<br>
 						<div>
 							<label for="nombreCP">Nombre:</label>
-							<input type="text" class="form-control" id="nombreCP" placeholder="NombreCP"
+							<input type="text" class="form-control" id="nombreCP" placeholder="Nombre de la tasa"
 								th:field="*{nombreCP}" required><br>
 
 							<label for="precioCP">Precio en $ar:</label>
-							<input type="number" class="form-control" id="precioCP" placeholder="precioCP"
+							<input type="number" class="form-control" id="precioCP" placeholder="Precio en $ argentinos"
 								th:field="*{precioCP}" step="0.01" min="0" required onchange="formatoDecimal(this);"> <br>
 
 							<label for="IVA">IVA %:</label>
@@ -44,15 +44,15 @@
 								required step="1.00" min="0" max="100"><br>
 
 							<label for="tasaAN">Tasa Aeroportuaria Nacional en $:</label>
-							<input type="number" class="form-control" id="tasaAN" placeholder="tasaAN"
+							<input type="number" class="form-control" id="tasaAN" placeholder="Tasa Aeroportuaria Nacional"
 								th:field="*{tasaAN}" step="0.01" min="0" required onchange="formatoDecimal(this);"><br>
 
 							<label for="tasaAI">Tasa Aeroportuaria InterNacional en U$S:</label>
-							<input type="number" class="form-control" id="tasaAI" placeholder="tasaAI"
+							<input type="number" class="form-control" id="tasaAI" placeholder="Tasa Aeroportuaria Internacional"
 								th:field="*{tasaAI}" step="0.01" min="0" required onchange="formatoDecimal(this);"> <br>
 
 							<label for="cotizacion">Cotizacion del Dolar:</label>
-							<input type="number" class="form-control" id="cotizacion" placeholder="cotizacion"
+							<input type="number" class="form-control" id="cotizacion" placeholder="Cotizacion del Dolar"
 								th:field="*{cotizacion}" required step="1.00" min="0"><br>
 
 							<!--cards DolarHoy Oficial/blue-->

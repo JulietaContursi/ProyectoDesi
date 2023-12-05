@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class ModelVuelo {
+public class ModelVuelo implements Comparable<ModelVuelo>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +48,11 @@ public class ModelVuelo {
     @OneToMany(targetEntity = ModelTicket.class, fetch = FetchType.LAZY, mappedBy = "vuelo")
     private List<ModelTicket> ticket;
 
+    @OneToMany(targetEntity = ModelAsiento.class, fetch = FetchType.LAZY, mappedBy = "vuelo")
+    private List<ModelAsiento> asiento;
+    
+    
+    
     public ModelVuelo() {
     }
 
@@ -138,7 +143,14 @@ public class ModelVuelo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ModelVuelo vuelo)) return false;
-        return getIdVuelo() == vuelo.getIdVuelo() && Double.compare(vuelo.getPrecioVuelo(), getPrecioVuelo()) == 0 && Objects.equals(getCiudadOrigen(), vuelo.getCiudadOrigen()) && Objects.equals(getCiudadDestino(), vuelo.getCiudadDestino()) && getTipo() == vuelo.getTipo() && Objects.equals(getFecha(), vuelo.getFecha()) && Objects.equals(getHora(), vuelo.getHora()) && Objects.equals(getAvion(), vuelo.getAvion()) && getEstado() == vuelo.getEstado() && Objects.equals(getTicket(), vuelo.getTicket());
+        return getIdVuelo() == vuelo.getIdVuelo() && Double.compare(vuelo.getPrecioVuelo(), 
+        		getPrecioVuelo()) == 0 && Objects.equals(getCiudadOrigen(), 
+        				vuelo.getCiudadOrigen()) && Objects.equals(getCiudadDestino(), 
+        						vuelo.getCiudadDestino()) && getTipo() == vuelo.getTipo() && Objects.equals(getFecha(), 
+        								vuelo.getFecha()) && Objects.equals(getHora(), 
+        										vuelo.getHora()) && Objects.equals(getAvion(), 
+        												vuelo.getAvion()) && getEstado() == vuelo.getEstado() && Objects.equals(getTicket(), 
+        														vuelo.getTicket());
     }
 
     @Override
@@ -169,5 +181,10 @@ public class ModelVuelo {
                 ", estado=" + estado +
                 ", ticket=" + ticket +
                 '}';
+    }
+    
+    @Override
+    public int compareTo(ModelVuelo otroVuelo) {
+        return this.fecha.compareTo(otroVuelo.getFecha());
     }
 }
