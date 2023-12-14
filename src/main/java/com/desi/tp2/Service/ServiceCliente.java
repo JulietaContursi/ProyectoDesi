@@ -1,12 +1,10 @@
 package com.desi.tp2.Service;
-
 import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Repository.RepoCliente;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 @Service
 public class ServiceCliente implements ServicioBase<ModelCliente>{

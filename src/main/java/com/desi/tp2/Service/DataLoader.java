@@ -1,5 +1,4 @@
 package com.desi.tp2.Service;
-
 import com.desi.tp2.Model.ModelAvion;
 import com.desi.tp2.Model.ModelCP;
 import com.desi.tp2.Model.ModelCiudad;
@@ -7,7 +6,6 @@ import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 
 @Component
@@ -17,14 +15,13 @@ public class DataLoader implements CommandLineRunner {
     private final RepoCiudad RepoCiudad;
     private final RepoCliente RepoCliente;
     private final RepoCP RepoCP;
-    private final RepoVuelo RepoVuelo;
 
-    public DataLoader(RepoAvion RepoAvion, RepoCiudad RepoCiudad, RepoCliente RepoCliente, RepoCP RepoCP, RepoVuelo RepoVuelo) {
+
+    public DataLoader(RepoAvion RepoAvion, RepoCiudad RepoCiudad, RepoCliente RepoCliente, RepoCP RepoCP) {
         this.RepoAvion = RepoAvion;
         this.RepoCiudad = RepoCiudad;
         this.RepoCliente = RepoCliente;
         this.RepoCP = RepoCP;
-        this.RepoVuelo = RepoVuelo;
     }
     @Override
     public void run(String... args) {
@@ -57,7 +54,6 @@ public class DataLoader implements CommandLineRunner {
             RepoCliente.save(new ModelCliente("Rodriguez María",23887978,"Brasil 5647 1 Dpto A","mariarodriguez@gmail.com", LocalDate.parse("1972-04-22"),1112500));
 
         }
-
-
+        
     }
 }

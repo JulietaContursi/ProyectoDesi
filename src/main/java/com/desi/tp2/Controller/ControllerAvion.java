@@ -1,18 +1,12 @@
 package com.desi.tp2.Controller;
 
 import com.desi.tp2.Model.ModelAvion;
-import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Service.ServiceAvion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -26,7 +20,6 @@ public class ControllerAvion {
     @GetMapping("/lista")
     public ModelAndView aviones() throws Exception {
         ModelAndView mav = new ModelAndView("aviones");
-        List<ModelAvion> aviones = null;
         mav.addObject("aviones", avionRepository.buscarTodo());
         mav.addObject("cantidadAsientos", avionRepository.buscarTodosConCantidadAsientos());
         return mav;

@@ -55,7 +55,6 @@ public class ServiceCiudad implements ServicioBase<ModelCiudad>{
     public boolean borrar(long id) throws Exception {
         Optional<ModelCiudad> opt = this.repoCiudad.findById(id);
         if(!opt.isEmpty()){
-            ModelCiudad ciudad = opt.get();
             this.repoCiudad.deleteById(id);
         }else{
             throw new Exception();

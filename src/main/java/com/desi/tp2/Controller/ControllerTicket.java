@@ -1,11 +1,9 @@
 package com.desi.tp2.Controller;
-
 import com.desi.tp2.Model.ModelTicket;
 import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;

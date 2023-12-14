@@ -1,11 +1,7 @@
 package com.desi.tp2.Service;
 
 import com.desi.tp2.Model.ModelAsiento;
-import com.desi.tp2.Model.ModelVuelo;
-import com.desi.tp2.Model.ModelAvion;
 import com.desi.tp2.Repository.RepoAsiento;
-import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

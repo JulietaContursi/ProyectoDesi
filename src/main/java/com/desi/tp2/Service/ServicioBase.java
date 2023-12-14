@@ -1,8 +1,5 @@
 package com.desi.tp2.Service;
-
-import com.desi.tp2.Model.ModelCliente;
 import jakarta.transaction.Transactional;
-
 import java.util.List;
 
 public interface ServicioBase<E> {

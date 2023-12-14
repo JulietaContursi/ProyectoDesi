@@ -1,11 +1,8 @@
 package com.desi.tp2.Service;
-
 import com.desi.tp2.Model.ModelAvion;
-import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Repository.RepoAvion;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +27,6 @@ public class ServiceAvion implements ServicioBase<ModelAvion>{
 
     @Override
     public List<ModelAvion> buscarTodo(ModelAvion x) throws Exception {
-        return null;
-    }
-
-    public List<ModelCliente> buscarTodo(String nombre) throws Exception {
-        List<ModelAvion> aviones = this.repoAvion.findAllBy(nombre);
         return null;
     }
 

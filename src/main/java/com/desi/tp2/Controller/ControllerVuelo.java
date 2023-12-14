@@ -10,7 +10,6 @@ import com.desi.tp2.Service.ServiceAvion;
 import com.desi.tp2.Service.ServiceCiudad;
 import com.desi.tp2.Service.ServiceCliente;
 import com.desi.tp2.Service.ServiceVuelo;
-import com.desi.tp2.Service.ServiceAsiento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -37,8 +33,6 @@ import java.util.Optional;
     private ServiceVuelo vueloRepository;
     @Autowired
     private ServiceAvion avionRepository;
-    @Autowired
-    private ServiceAsiento asientoRepository;
     @Autowired
     private ServiceCliente clienteRepository;
 
@@ -112,7 +106,7 @@ import java.util.Optional;
         return mav;
     }
     
-    @PostMapping("/venderAsiento")
+    @PostMapping("/venderAsiento/{idVuelo}")
     public ModelAndView seleccionarAsiento(@RequestParam("idVuelo") int idVuelo) throws Exception {
         ModelAndView mav = new ModelAndView();
         ModelVuelo vuelo = vueloRepository.buscarPorId(idVuelo);
