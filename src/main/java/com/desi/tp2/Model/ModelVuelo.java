@@ -23,16 +23,18 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
     public enum tipoVuelo {
         NACIONAL, INTERNACIONAL
     }
-
+    
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private tipoVuelo tipo;
 
     @Min(0)
     private double precioVuelo;
 
-
+    @Column(nullable = false)
     private LocalDate fecha;
-
+    
+    @Column(nullable = false)
     private LocalTime hora;
 
     @ManyToOne(targetEntity = ModelAvion.class)
@@ -42,6 +44,7 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
         NORMAL, REPROGRAMADO, CANCELADO
     }
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private estadoVuelo estado;
 
@@ -52,6 +55,7 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
     private List<ModelAsiento> asiento;
     
     @Min(0)
+    @Column(nullable = false)
     private int asientosDeAvion;
     
     public ModelVuelo() {

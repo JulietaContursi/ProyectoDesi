@@ -2,9 +2,7 @@ package com.desi.tp2.Controller;
 
 import com.desi.tp2.Model.ModelVuelo.tipoVuelo;
 import com.desi.tp2.Model.ModelVuelo.estadoVuelo;
-import com.desi.tp2.Model.ModelAsiento;
 import com.desi.tp2.Model.ModelAvion;
-import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Service.ServiceAvion;
 import com.desi.tp2.Service.ServiceCiudad;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +32,7 @@ import java.util.Optional;
     private ServiceAvion avionRepository;
     @Autowired
     private ServiceCliente clienteRepository;
+
 
     @GetMapping("/lista")
     public ModelAndView vuelos(@RequestParam("fecha")
@@ -107,20 +105,16 @@ import java.util.Optional;
     }
     
     @PostMapping("/venderAsiento/{idVuelo}")
-    public ModelAndView seleccionarAsiento(@RequestParam("idVuelo") int idVuelo) throws Exception {
+    public ModelAndView seleccionarAsiento(@PathVariable("idVuelo") int idVuelo) throws Exception {
         ModelAndView mav = new ModelAndView();
         ModelVuelo vuelo = vueloRepository.buscarPorId(idVuelo);
-        List<ModelCliente> listaDeClientes = clienteRepository.buscarTodo();
-        ModelAvion avion = vuelo.getAvion();
-        List<ModelAsiento> asientosDisponibles = new ArrayList<>();
+
         mav.addObject("vuelo", vuelo);
-        mav.addObject("asientosDisponibles", asientosDisponibles);
-        mav.addObject("totalAsientos", avionRepository.cantidadAsientosAvion(avion));
-        mav.addObject("listaDeClientes", listaDeClientes);
+        mav.addObject("asientosDisponibles", vueloRepository.buscarAsientoLibres());
+        mav.addObject("listaDeClientes", clienteRepository.buscarTodo());
         mav.setViewName("redirect:/venderAsiento");
         return mav;
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<ModelVuelo> actualizarVuelo(@PathVariable(value = "id") Long idVuelo,
