@@ -5,7 +5,10 @@ import com.desi.tp2.Model.ModelCliente;
 import com.desi.tp2.Repository.RepoAvion;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -70,8 +73,21 @@ public class ServiceAvion implements ServicioBase<ModelAvion>{
     }
         return true;
     }
-    public int cantidadAsientosAvion(ModelAvion avion) {
 
+    // solo calcula cantidad de asientos del avion pasado por parámetro
+    public int cantidadAsientosAvion(ModelAvion avion) {
     	return avion.getFilas() * avion.getAsientosXFila();
+    }
+    
+    //devuelve un hashmap con idAvion:cantidad de asientos del avión
+    public Map<Long, Integer> buscarTodosConCantidadAsientos() {
+        List<ModelAvion> aviones = repoAvion.findAll();
+        Map<Long, Integer> cantidadAsientos = new HashMap<>();
+        for (ModelAvion avion : aviones) {
+            long idAvion = avion.getIdAvion();
+            int cantidad = cantidadAsientosAvion(avion);
+            cantidadAsientos.put(idAvion, cantidad);
+        }
+        return cantidadAsientos;
     }
 }

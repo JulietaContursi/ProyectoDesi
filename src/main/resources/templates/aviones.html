@@ -30,6 +30,7 @@
             <th>Nombre</th>
             <th>Filas</th>
             <th>Asientos por fila</th>
+            <th>Total de asientos</th>
             <th>Aerolínea</th>
         </tr>
         </thead>
@@ -40,10 +41,17 @@
             <td th:text="${aviones.nombre}"></td>
             <td th:text="${aviones.filas}"></td>
             <td th:text="${aviones.asientosXFila}"></td>
+            
+            <td th:with="cantidad=${cantidadAsientos.containsKey(aviones.idAvion) ? cantidadAsientos[aviones.idAvion] : '0'}">
+					    <span class="btn btn-outline-success" th:text="${cantidad}"></span>
+					</td>
+            
             <td th:text="${aviones.aerolinea}"></td>
         </tr>
         </tbody>
     </table>
 </div>
+
+
 </body>
 </html>

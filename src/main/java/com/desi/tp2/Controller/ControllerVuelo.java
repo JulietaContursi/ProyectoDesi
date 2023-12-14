@@ -56,36 +56,16 @@ import java.util.Optional;
             if (vuelos.isEmpty()) {
                 mav.addObject("msgError", "No se encontraron vuelos para esta fecha.");
             } else {
-            	//creamos una lista hash para pasar al modelo idVuelo:cantidadDeAsientosVendidos
-            	Map<Long, Integer> cantidadAsientosVendidos = new HashMap<>(); //lista(idVuelo:cantidadAsientosVendidos)
-                for (ModelVuelo vuelo : vuelos) {
-                    long idVuelo = vuelo.getIdVuelo();
-                    restantes = vuelo.getAsientosDeAvion() - (int) asientoRepository.cantidadDeAsientosVendidos(vuelo.getAvion().getIdAvion());
-                    
-                    //int cantidadAsientos = (int) asientoRepository.cantidadDeAsientosVendidos(vuelo.getAvion().getIdAvion());
-                    cantidadAsientosVendidos.put(idVuelo, restantes);
-                }
-                
-                mav.addObject("vuelos", vuelos);
-                mav.addObject("cantidadAsientosVendidos", cantidadAsientosVendidos);
+            	mav.addObject("vuelos", vuelos);
+                mav.addObject("cantidadAsientosVendidos", vueloRepository.buscarAsientoLibres());
                 mav.addObject("restantes", restantes);	
             }
         } else {
         	int restantes = 0;
-        	int cantidadAsientos = 0;
             List<ModelVuelo> vuelos;
             vuelos = vueloRepository.ordenarPorFechaHora(vueloRepository.buscarTodo());
-          //creamos una lista hash para pasar al modelo idVuelo:cantidadDeAsientosVendidos
-        	Map<Long, Integer> cantidadAsientosVendidos = new HashMap<>();
-            for (ModelVuelo vuelo : vuelos) {
-                long idVuelo = vuelo.getIdVuelo();
-                restantes = vuelo.getAsientosDeAvion() - (int) asientoRepository.cantidadDeAsientosVendidos(idVuelo);
-                
-                //cantidadAsientos =  avionRepository.cantidadAsientosAvion(vuelo.getAvion());
-                cantidadAsientosVendidos.put(idVuelo, restantes);
-            }
-			mav.addObject("vuelos", vuelos);
-            mav.addObject("cantidadAsientosVendidos", cantidadAsientosVendidos);
+            mav.addObject("vuelos", vuelos);
+            mav.addObject("cantidadAsientosVendidos", vueloRepository.buscarAsientoLibres());
             mav.addObject("restantes", restantes);
         }
         return mav;

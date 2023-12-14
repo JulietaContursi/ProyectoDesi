@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,6 +25,9 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
     
 	@Autowired
 	private final RepoVuelo repoVuelo;
+	
+	@Autowired
+	private RepoAsiento repoAsiento;
 	
     public ServiceVuelo(RepoVuelo repoVuelo) {
         this.repoVuelo = repoVuelo;
@@ -63,9 +68,6 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
         } return repoVuelo.findAll();
     }
     
-    public int calcularCantidadAsientos(Optional<ModelAvion> avion) {
-    	return avion.get().getFilas() * avion.get().getAsientosXFila();
-    }
     
     @Override
     @Transactional
@@ -107,4 +109,22 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
 		return vuelos;
     	
     }
+    
+    public int calcularCantidadAsientos(Optional<ModelAvion> avion) {
+    	return avion.get().getFilas() * avion.get().getAsientosXFila();
+    }
+    
+    public Map<Long, Integer> buscarAsientoLibres() {
+        List<ModelVuelo> vuelos = this.repoVuelo.findAll();
+        Map<Long, Integer> cantidadAsientos = new HashMap<>();
+        for (ModelVuelo vuelo : vuelos) {
+            long idVuelo = vuelo.getIdVuelo();
+            int restantes = (int) (vuelo.getAsientosDeAvion() - repoAsiento.countByVueloIdAndEstadoVendido(idVuelo));
+            cantidadAsientos.put(idVuelo, restantes);
+        }
+        return cantidadAsientos;
+    }
+    
+    
+    
 }

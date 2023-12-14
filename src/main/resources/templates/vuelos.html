@@ -31,7 +31,7 @@
 					placeholder="Seleccione la fecha">
 				<input type="submit" class="btn btn-info mb-2" value="Buscar">
 				&nbsp;&nbsp;
-				<input type="button" class="btn btn-secondary mb-2" value="Limpiar" onclick="limpiarCampos()">
+				<input type="button" class="btn btn-secondary mb-2" value="Lista sin filtros" onclick="limpiarCampos()">
 			</div>
 		</form>
 	</div>
@@ -79,7 +79,7 @@
 					<td th:text="${vuelo.asientosDeAvion}"></td>
 					<!-- Mostramos la cantidad de asientos vendidos para ese vuelo-->
 					<td th:with="cantidadAsientos=${cantidadAsientosVendidos.containsKey(vuelo.idVuelo) ? cantidadAsientosVendidos[vuelo.idVuelo] : '0'}">
-					    <span class="btn btn-outline-success" th:text="${cantidadAsientos}"></span>
+					    <span class="btn btn-outline-success btn-sm" th:text="${cantidadAsientos}"></span>
 					</td>
 									
 					<td>
