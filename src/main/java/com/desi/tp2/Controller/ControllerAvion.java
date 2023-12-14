@@ -20,6 +20,8 @@ public class ControllerAvion {
     @GetMapping("/lista")
     public ModelAndView aviones() throws Exception {
         ModelAndView mav = new ModelAndView("aviones");
+        
+        
         mav.addObject("aviones", avionRepository.buscarTodo());
         return mav;
     }
@@ -28,10 +30,9 @@ public class ControllerAvion {
     @GetMapping("/{id}") //buscan un avión por su id en el avionRepository y devuelven una ResponseEntity con diferentes códigos de estado dependiendo de si se encontró o no el avión.
     public ResponseEntity<ModelAvion> obtenerAvionPorId(@PathVariable(value = "id") Long idAvion) throws Exception {
         Optional<ModelAvion> avion = Optional.ofNullable(avionRepository.buscarPorId(idAvion));
-        //Se crea un Optional que envuelve el resultado de la búsqueda de un avión por su id en el avionRepository. Si el avión existe, se guarda en el Optional; de lo contrario, el Optional estará vacío.
         return avion.map(modelAvion -> ResponseEntity.ok().body(modelAvion)).orElseGet(() -> ResponseEntity.notFound().build());
-        //Se utiliza el método map() de Optional para realizar una operación si el Optional contiene un valor. En este caso, si el Optional tiene un avión, se crea una ResponseEntity con el código de estado OK y el cuerpo del mensaje es el modelo del avión encontrado.
     }
+    
     @GetMapping("/nuevo")
     ModelAndView nuevo(){
         return new ModelAndView("crearAvion")

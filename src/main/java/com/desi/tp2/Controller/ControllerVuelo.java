@@ -1,7 +1,6 @@
 package com.desi.tp2.Controller;
 
 import com.desi.tp2.Model.ModelVuelo.tipoVuelo;
-import com.desi.tp2.Repository.RepoAsiento;
 import com.desi.tp2.Model.ModelVuelo.estadoVuelo;
 import com.desi.tp2.Model.ModelAsiento;
 import com.desi.tp2.Model.ModelAvion;
@@ -63,8 +62,8 @@ import java.util.Optional;
                     long idVuelo = vuelo.getIdVuelo();
                     restantes = vuelo.getAsientosDeAvion() - (int) asientoRepository.cantidadDeAsientosVendidos(vuelo.getAvion().getIdAvion());
                     
-                    int cantidadAsientos = (int) asientoRepository.cantidadDeAsientosVendidos(vuelo.getAvion().getIdAvion());
-                    cantidadAsientosVendidos.put(idVuelo, cantidadAsientos);
+                    //int cantidadAsientos = (int) asientoRepository.cantidadDeAsientosVendidos(vuelo.getAvion().getIdAvion());
+                    cantidadAsientosVendidos.put(idVuelo, restantes);
                 }
                 
                 mav.addObject("vuelos", vuelos);
@@ -76,7 +75,6 @@ import java.util.Optional;
         	int cantidadAsientos = 0;
             List<ModelVuelo> vuelos;
             vuelos = vueloRepository.ordenarPorFechaHora(vueloRepository.buscarTodo());
-            mav.addObject("vuelos", vuelos);
           //creamos una lista hash para pasar al modelo idVuelo:cantidadDeAsientosVendidos
         	Map<Long, Integer> cantidadAsientosVendidos = new HashMap<>();
             for (ModelVuelo vuelo : vuelos) {
@@ -86,7 +84,7 @@ import java.util.Optional;
                 //cantidadAsientos =  avionRepository.cantidadAsientosAvion(vuelo.getAvion());
                 cantidadAsientosVendidos.put(idVuelo, restantes);
             }
-
+			mav.addObject("vuelos", vuelos);
             mav.addObject("cantidadAsientosVendidos", cantidadAsientosVendidos);
             mav.addObject("restantes", restantes);
         }
@@ -116,7 +114,6 @@ import java.util.Optional;
         Optional<LocalDate> fecha = Optional.ofNullable(vuelo.getFecha());
         Optional<ModelAvion> avion = Optional.ofNullable(vuelo.getAvion());
         List<ModelVuelo> vuelos = vueloRepository.findVuelosByFechaAndAvion(fecha, avion);
-        
         // obtenemos la cantidad de asientos del avion y lo guardamos en el vuelo
         try {
             if(vuelos.isEmpty()){
@@ -141,15 +138,7 @@ import java.util.Optional;
         ModelVuelo vuelo = vueloRepository.buscarPorId(idVuelo);
         List<ModelCliente> listaDeClientes = clienteRepository.buscarTodo();
         ModelAvion avion = vuelo.getAvion();
-        int filas = avion.getFilas();
-        int asientosXFila = avion.getAsientosXFila();
-        int totalAsientos = filas * asientosXFila;
         List<ModelAsiento> asientosDisponibles = new ArrayList<>();
-        
-        // Acá hay que implementar la lógica para calcular los asientos disponibles
-        // generr hashList con {idVuelo:asientosVendidos}
-        // y agregarlos a la lista "asientosDisponibles"
-        
         mav.addObject("vuelo", vuelo);
         mav.addObject("asientosDisponibles", asientosDisponibles);
         mav.addObject("totalAsientos", avionRepository.cantidadAsientosAvion(avion));
