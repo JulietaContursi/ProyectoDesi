@@ -5,6 +5,8 @@ import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Repository.RepoAsiento;
 import com.desi.tp2.Repository.RepoVuelo;
 import jakarta.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,15 +20,12 @@ import static java.util.Optional.*;
 
 @Service
 public class ServiceVuelo implements ServicioBase<ModelVuelo>{
-    private final RepoVuelo repoVuelo;
-    private RepoAsiento repoAsiento;
-
+    
+	@Autowired
+	private final RepoVuelo repoVuelo;
+	
     public ServiceVuelo(RepoVuelo repoVuelo) {
         this.repoVuelo = repoVuelo;
-		this.repoAsiento = repoAsiento;
-    }
-    public void ServiceAsiento(RepoAsiento repoAsiento) {
-    	this.repoAsiento = repoAsiento;
     }
 
     @Override
@@ -63,7 +62,11 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
         }else{
         } return repoVuelo.findAll();
     }
-
+    
+    public int calcularCantidadAsientos(Optional<ModelAvion> avion) {
+    	return avion.get().getFilas() * avion.get().getAsientosXFila();
+    }
+    
     @Override
     @Transactional
     public ModelVuelo guardar(ModelVuelo entity) throws Exception {
@@ -85,7 +88,6 @@ public class ServiceVuelo implements ServicioBase<ModelVuelo>{
     public boolean borrar(long id) throws Exception {
         Optional<ModelVuelo> opt = this.repoVuelo.findById(id);
         if(!opt.isEmpty()){
-            ModelVuelo vuelo = opt.get();
             this.repoVuelo.deleteById(id);
         }else{
             throw new Exception();

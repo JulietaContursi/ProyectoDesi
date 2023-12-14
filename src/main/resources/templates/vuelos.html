@@ -1,82 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Listado de Vuelos</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-  <h1>Aeropuerto de Sauce Viejo - Vuelos</h1>
+	<meta charset="UTF-8">
+	<title>Listado de Vuelos</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<h1>Aeropuerto de Sauce Viejo - Vuelos</h1>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/"> Inicio</a>
-  <!-- Navbar links -->
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/vuelos/nuevo}">Crear vuelo</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<a class="navbar-brand" href="/"> Inicio</a>
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/vuelos/nuevo}">Crear vuelo</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
-<!-- Búsqueda de Vuelos -->
-<div>
-  <form class="form-inLine" th:action="@{/vuelos/lista}">
-    <div class="form-group mx-sm-3 mb-2">
-      <label>Filtrar : </label>
-      <input type="date" name="fecha" class="form-controL" id="inicio" th:value="${fecha}" placeholder="Seleccione la fecha">
-      <input type="submit" class="btn btn-info mb-2" value="Buscar">
-      &nbsp;&nbsp;
-      <input type="button" class="btn btn-secondary mb-2" value="Limpiar" onclick="limpiarCampos()">
-    </div>
-  </form>
-</div>
+	<!-- Búsqueda de Vuelos -->
+	<div>
+		<form class="form-inLine" th:action="@{/vuelos/lista}">
+			<div class="form-group mx-sm-3 mb-2">
+				<label>Filtrar : </label>
+				<input type="date" name="fecha" class="form-controL" id="inicio" th:value="${fecha}"
+					placeholder="Seleccione la fecha">
+				<input type="submit" class="btn btn-info mb-2" value="Buscar">
+				&nbsp;&nbsp;
+				<input type="button" class="btn btn-secondary mb-2" value="Limpiar" onclick="limpiarCampos()">
+			</div>
+		</form>
+	</div>
 
-<div>
-  <div class="alert alert-danger" role="alert" th:if="${msgError ne null}" >
-    <td th:text="${msgError}">
-    </td>
-  </div>
-  <div class="alert alert-success" role="alert" th:if="${msgExito ne null}" >
-    <td th:text="${msgExito}">
-    </td>
-  </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Ciudad Origen</th>
-        <th>Ciudad Destino</th>
-        <th>Tipo de Vuelo</th>
-        <th>Precio de Vuelo</th>
-        <th>Fecha</th>
-        <th>Hora</th>
-        <th>Avión</th>
-        <th>Estado del Vuelo</th>
-        <th>Asientos libres</th>
-      </tr>
-    </thead>
-      <tbody>
-<!--        <tr th:each="vuelo : ${vuelos}">-->
-		<tr th:each="vuelo : ${vuelos}">	
-              <td th:text="${vuelo.idVuelo}"></td>
-              <td th:text="${vuelo.ciudadOrigen}"></td>
-              <td th:text="${vuelo.ciudadDestino}"></td>
-              <td th:text="${vuelo.tipo}"></td>
-              <td th:text="${vuelo.precioVuelo}"></td>
-              <td th:text="${vuelo.fecha}"></td>
-              <td th:text="${vuelo.hora}"></td>
-              <td th:text="${vuelo.avion}"></td>
-              <td th:text="${vuelo.estado}"></td>
-<!--              <td th:if="${asientosVendidosPorVuelo.get(vuelo.idVuelo) != null}"></td>-->
-        </tr>
-      </tbody>
-  </table>
-</div>
-<script type="text/javascript">
-  function limpiarCampos(){
-    window.location = '/vuelos/lista';
-  }
-</script>
+	<div>
+		<div class="alert alert-danger" role="alert" th:if="${msgError ne null}">
+			<td th:text="${msgError}">
+			</td>
+		</div>
+		<div class="alert alert-success" role="alert" th:if="${msgExito ne null}">
+			<td th:text="${msgExito}">
+			</td>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Ciudad Origen</th>
+					<th>Ciudad Destino</th>
+					<th>Tipo de Vuelo</th>
+					<th>Precio de Vuelo</th>
+					<th>Fecha</th>
+					<th>Hora</th>
+					<th>Avión</th>
+					<th>Estado del Vuelo</th>
+					<th>Asientos del vuelo</th>
+					<th>Libres</th>
+
+					
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<!--        <tr th:each="vuelo : ${vuelos}">-->
+				<tr th:each="vuelo : ${vuelos}">
+					<td th:text="${vuelo.idVuelo}"></td>
+					<td th:text="${vuelo.ciudadOrigen}"></td>
+					<td th:text="${vuelo.ciudadDestino}"></td>
+					<td th:text="${vuelo.tipo}"></td>
+					<td th:text="${vuelo.precioVuelo}"></td>
+					<td th:text="${vuelo.fecha}"></td>
+					<td th:text="${vuelo.hora}"></td>
+					<td th:text="${vuelo.avion}"></td>
+					<td th:text="${vuelo.estado}"></td>
+					<td th:text="${vuelo.asientosDeAvion}"></td>
+					<!-- Mostramos la cantidad de asientos vendidos para ese vuelo-->
+					<td th:with="cantidadAsientos=${cantidadAsientosVendidos.containsKey(vuelo.idVuelo) ? cantidadAsientosVendidos[vuelo.idVuelo] : '0'}">
+					    <span class="btn btn-outline-success" th:text="${cantidadAsientos}"></span>
+					</td>
+									
+					<td>
+						<a class="btn btn-success btn-sm" th:href="@{/venderAsiento/{id}(id=${vuelo.idVuelo})}"
+							method="post">Vender Ticket</a>
+					</td>
+					<td>
+						<a class="btn btn-danger btn-sm" th:href="@{/vuelos/eliminar/{id}(id=${vuelo.idVuelo})}" method="delete" onclick="return confirm('Quieres borrar el vuelo?')">Eliminar</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		function limpiarCampos() {
+			window.location = '/vuelos/lista';
+		}
+	</script>
 </body>
+
 </html>

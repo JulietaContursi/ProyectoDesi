@@ -9,9 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepoAsiento extends JpaRepository<ModelAsiento, Long> {
 
-	//@Query("SELECT a FROM ModelAsientos a WHERE a.id_vuelo = :vueloId")
-	//List<ModelAsiento> findAsientosVendidosByVuelo(@Param("vueloId") Long vueloId);
-	
-	@Query("SELECT COUNT(a) FROM ModelAsiento a WHERE a.vuelo.idVuelo = :vueloId")
-	int countAsientosVendidosByVuelo(@Param("vueloId") Long vueloId);
+	@Query("SELECT COUNT(*) FROM ModelAsiento a WHERE a.vuelo.idVuelo = :idVuelo AND a.estado = 'vendido'")
+    long countByVueloIdAndEstadoVendido(@Param("idVuelo") long idVuelo);
+
 }

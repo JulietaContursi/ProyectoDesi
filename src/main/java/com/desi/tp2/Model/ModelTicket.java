@@ -16,8 +16,12 @@ public class ModelTicket {
     @ManyToOne(targetEntity = ModelCliente.class)
     private ModelCliente cliente;
 
-    @ManyToOne(targetEntity = ModelAvion.class)
+    @ManyToOne(targetEntity = ModelAvion.class) // innecesario
     private ModelAvion avion;
+    
+    @OneToOne(targetEntity = ModelAsiento.class, cascade=CascadeType.PERSIST)
+    @JoinColumn(name="id_asiento")
+    private ModelAvion asiento;
     
     private int asientoFila;
 
@@ -32,17 +36,30 @@ public class ModelTicket {
     public ModelTicket() {
     }
 
-    public ModelTicket(ModelVuelo vuelo, ModelCliente cliente, int asientoFila, char asientoLetra, double precio, LocalDateTime fechaVuelo, LocalDateTime fechaTicket) {
-        this.vuelo = vuelo;
-        this.cliente = cliente;
-        this.asientoFila = asientoFila;
-        this.asientoLetra = asientoLetra;
-        this.precio = precio;
-        this.fechaVuelo = fechaVuelo;
-        this.fechaTicket = fechaTicket;
-    }
+    public ModelTicket(ModelVuelo vuelo, ModelCliente cliente, ModelAvion avion, ModelAvion asiento, int asientoFila,
+			char asientoLetra, double precio, LocalDateTime fechaVuelo, LocalDateTime fechaTicket) {
+		this.vuelo = vuelo;
+		this.cliente = cliente;
+		this.avion = avion;
+		this.asiento = asiento;
+		this.asientoFila = asientoFila;
+		this.asientoLetra = asientoLetra;
+		this.precio = precio;
+		this.fechaVuelo = fechaVuelo;
+		this.fechaTicket = fechaTicket;
+	}
 
-    public Long getIdTicket() {
+
+
+	public ModelAvion getAsiento() {
+		return asiento;
+	}
+
+	public void setAsiento(ModelAvion asiento) {
+		this.asiento = asiento;
+	}
+
+	public Long getIdTicket() {
         return idTicket;
     }
 
@@ -102,17 +119,43 @@ public class ModelTicket {
         this.fechaTicket = fechaTicket;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ModelTicket that)) return false;
-        return asientoFila == that.asientoFila && asientoLetra == that.asientoLetra && Double.compare(that.precio, precio) == 0 && Objects.equals(idTicket, that.idTicket) && Objects.equals(vuelo, that.vuelo) && Objects.equals(cliente, that.cliente) && Objects.equals(fechaVuelo, that.fechaVuelo) && Objects.equals(fechaTicket, that.fechaTicket);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idTicket, vuelo, cliente, asientoFila, asientoLetra, precio, fechaVuelo, fechaTicket);
-    }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(asiento, asientoFila, asientoLetra, avion, cliente, fechaTicket, fechaVuelo, idTicket,
+				precio, vuelo);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ModelTicket other = (ModelTicket) obj;
+		return Objects.equals(asiento, other.asiento) && asientoFila == other.asientoFila
+				&& asientoLetra == other.asientoLetra && Objects.equals(avion, other.avion)
+				&& Objects.equals(cliente, other.cliente) && Objects.equals(fechaTicket, other.fechaTicket)
+				&& Objects.equals(fechaVuelo, other.fechaVuelo) && Objects.equals(idTicket, other.idTicket)
+				&& Double.doubleToLongBits(precio) == Double.doubleToLongBits(other.precio)
+				&& Objects.equals(vuelo, other.vuelo);
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "ModelTicket [idTicket=" + idTicket + ", vuelo=" + vuelo + ", cliente=" + cliente + ", avion=" + avion
+				+ ", asiento=" + asiento + ", asientoFila=" + asientoFila + ", asientoLetra=" + asientoLetra
+				+ ", precio=" + precio + ", fechaVuelo=" + fechaVuelo + ", fechaTicket=" + fechaTicket + "]";
+	}
+
+    
 
 
 }

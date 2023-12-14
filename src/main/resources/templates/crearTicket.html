@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Crear Ticket</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<a class="navbar-brand" href="#">Registro de Ticke de vuelo</a>
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<div class="navbar-nav">
+				<a class="nav-link" th:href="@{/}">Inicio</a>
+				<a class="nav-link" th:href="@{/tickets/lista}">Tickets</a>
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h2 class="text-center">Carga de ticket</h2>
+				<div class="card-body">
+
+					<form th:action="@{''}" th:object="${ticket}" method="POST">
+						<div>
+							<label>Cliente</label>
+							<select th:field="${listaDeClientes}" class="form-control">
+								<option th:each="cliente :${listaDeClientes}" th:value="${cliente.apellidoNombre}"
+									th:text="${cliente.apellidoNombre} + ${' - DNI: '} + ${cliente.dni}" />
+							</select>
+							<br>
+							<label>Nº de vuelo - Origen - Destino</label>
+							<select id="selectVuelo" th:field="${listaDeVuelos}" class="form-control">
+								<option th:each="vuelo :${listaDeVuelos}" th:value="${vuelo.idVuelo}"
+									th:text="${vuelo.idVuelo} + ${' '} + ${vuelo.ciudadOrigen} + ${' - '} + ${vuelo.ciudadDestino} + ${' - '} + ${vuelo.fecha}+ ${' - '} + ${vuelo.hora}" />
+							</select>
+							<br>
+							<select id="selectOtro" class="form-control">
+						        <!-- Este select se llenará dinámicamente basándose en el valor seleccionado en selectVuelo -->
+						    </select>
+
+							
+							
+							<div th:each="avion : ${listaDeAviones}" >
+							    <p th:text="'ID del Avión: ' + ${avion.idAvion}"></p>
+							    <p th:text="'Nombre del Avión: ' + ${avion.nombre}"></p>
+							    <p th:text="'Cantidad de Asientos: ' + (${avion.filas} * ${avion.asientosXFila})"></p>
+							    <!-- Agrega más atributos según sea necesario -->
+							</div>
+								
+							<label>Asiento:</label>
+							<select th:field="${listaDeAviones}" class="form-control">
+								<option th:each="avion : ${listaDeAviones}" th:value="${avion.nombre}"
+									th:text="${avion.nombre}" />
+							</select>
+							<br>
+							<!--   <label>Precio del Vuelo en ar$:</label>
+                        <input type="number" step="1.00" th:field="*{precioVuelo}" class="form-control" min="0" oninput="validity.valid||(value='');" />
+                        <br>
+
+                        <label>Fecha del vuelo:</label>
+                        <input type="date" th:field="*{fecha}" class="form-control"/>
+                        <br>
+
+                        <label>Hora del vuelo:</label>
+                        <input type="time" th:field="*{hora}" class="form-control"/>
+                        <br>
+                        <label>Estado del Vuelo:</label>
+                        <select th:field="*{estado}" class="form-control" name="Estado" th:placeholder="estado">
+                            <option th:each="estadoOpt : ${estadosDeVuelos}"
+                                    th:value="${estadoOpt}"
+                                    th:text="${estadoOpt}"></option>
+                        </select>
+                        </label>
+
+                        <br> 		-->
+
+						</div>
+
+						<button type="submit" class="btn btn-primary btn-lg btn-block">Registrar Ticket</button>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+
+</body>
+
+</html>

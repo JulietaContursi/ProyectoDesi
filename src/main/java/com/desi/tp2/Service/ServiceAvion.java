@@ -70,4 +70,8 @@ public class ServiceAvion implements ServicioBase<ModelAvion>{
     }
         return true;
     }
+    public int cantidadAsientosAvion(ModelAvion avion) {
+
+    	return avion.getFilas() * avion.getAsientosXFila();
+    }
 }

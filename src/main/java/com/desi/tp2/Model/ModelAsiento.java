@@ -17,26 +17,24 @@ public class ModelAsiento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_asiento")
+    @Column(name="id")
     private Long idAsiento;
 
     @ManyToOne
     @JoinColumn(name = "id_vuelo", nullable = false)
     private ModelVuelo vuelo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_avion", nullable = false)
-    private ModelAvion avion;
-    
-    
+    private int fila;
+    private int columna;
+    private String estado;
+	
+    public ModelAsiento() {}
 
-	public ModelAsiento() {
-		super();
-	}
-
-	public ModelAsiento(ModelVuelo vuelo, ModelAvion avion) {
+	public ModelAsiento(ModelVuelo vuelo, int fila, int columna, String estado) {
 		this.vuelo = vuelo;
-		this.avion = avion;
+		this.fila = fila;
+		this.columna = columna;
+		this.estado = estado;
 	}
 
 	public Long getIdAsiento() {
@@ -51,17 +49,33 @@ public class ModelAsiento {
 		this.vuelo = vuelo;
 	}
 
-	public ModelAvion getAvion() {
-		return avion;
+	public int getFila() {
+		return fila;
 	}
 
-	public void setAvion(ModelAvion avion) {
-		this.avion = avion;
+	public void setFila(int fila) {
+		this.fila = fila;
+	}
+
+	public int getColumna() {
+		return columna;
+	}
+
+	public void setColumna(int columna) {
+		this.columna = columna;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(avion, idAsiento, vuelo);
+		return Objects.hash(columna, estado, fila, idAsiento, vuelo);
 	}
 
 	@Override
@@ -73,16 +87,15 @@ public class ModelAsiento {
 		if (getClass() != obj.getClass())
 			return false;
 		ModelAsiento other = (ModelAsiento) obj;
-		return Objects.equals(avion, other.avion) && Objects.equals(idAsiento, other.idAsiento)
-				&& Objects.equals(vuelo, other.vuelo);
+		return columna == other.columna && Objects.equals(estado, other.estado) && fila == other.fila
+				&& Objects.equals(idAsiento, other.idAsiento) && Objects.equals(vuelo, other.vuelo);
 	}
 
 	@Override
 	public String toString() {
-		return "ModelAsientos [idAsiento=" + idAsiento + ", vuelo=" + vuelo + ", avion=" + avion + "]";
+		return "ModelAsiento [idAsiento=" + idAsiento + ", vuelo=" + vuelo + ", fila=" + fila + ", columna=" + columna
+				+ ", estado=" + estado + "]";
 	}
-
     
-
     
 }

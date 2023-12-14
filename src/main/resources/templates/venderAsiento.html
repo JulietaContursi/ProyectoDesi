@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Venta de Ticket</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<a class="navbar-brand" href="#">Venta de Ticket</a>
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<div class="navbar-nav">
+				<a class="nav-link" th:href="@{/}">Inicio</a>
+				<a class="nav-link" th:href="@{/vuelos/lista}">Vuelos</a>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h2 class="text-center">Vender ticket</h2>
+				<div class="card-body">
+
+					<form th:action="@{''}" th:object="${ticket}" method="post">
+			<!--			<br>
+						<div>
+							<label for="vuelo">Vuelo:</label>
+							<p th:text="'Vuelo: ' + ${vuelo.idVuelo}"></p>
+							<p th:text="'Fecha: ' + ${vuelo.fecha}"></p>
+							<p th:text="'Hora: ' + ${vuelo.hora}"></p>
+							<p th:text="'Origen: ' + ${vuelo.ciudadOrigen}"></p>
+							<p th:text="'Destino: ' + ${vuelo.ciudadDestino}"></p>
+
+							<label>Cliente</label>
+							<select th:field="${listaDeClientes}" class="form-control">
+								<option th:each="cliente :${listaDeClientes}" th:value="${cliente.idCliente}"
+									th:text="${cliente.idCliente} + ${' '} + ${cliente.apellidoNombre} + ${' - '} + ${ciente.dni} + ${' - '} + ${cliente.pasaporte}" />
+							</select>
+							
+							<select th:field="${listaDeClientes}" class="form-control">
+								<option th:each="cliente :${listaDeClientes}" th:value="${cliente.idCliente}"
+									th:text="${cliente.idCliente} + ${' '} + ${cliente.apellidoNombre} + ${' - '} + ${ciente.dni} + ${' - '} + ${cliente.pasaporte}" />
+							</select>
+							
+			-->				
+
+							<button type="submit" class="btn btn-primary btn-lg btn-block">Aceptar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<br>
+
+</body>
+
+</html>

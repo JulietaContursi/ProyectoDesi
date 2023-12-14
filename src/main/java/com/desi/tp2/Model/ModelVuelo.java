@@ -51,12 +51,13 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
     @OneToMany(targetEntity = ModelAsiento.class, fetch = FetchType.LAZY, mappedBy = "vuelo")
     private List<ModelAsiento> asiento;
     
-    
+    @Min(0)
+    private int asientosDeAvion;
     
     public ModelVuelo() {
     }
 
-    public ModelVuelo(ModelCiudad ciudadOrigen, ModelCiudad ciudadDestino, tipoVuelo tipo, double precioVuelo, LocalDate fecha, LocalTime hora, ModelAvion avion, estadoVuelo estado, List<ModelTicket> ticket) {
+    public ModelVuelo(ModelCiudad ciudadOrigen, ModelCiudad ciudadDestino, tipoVuelo tipo, double precioVuelo, LocalDate fecha, LocalTime hora, ModelAvion avion, estadoVuelo estado, List<ModelTicket> ticket, int asientosDeAvion) {
         this.ciudadOrigen = ciudadOrigen;
         this.ciudadDestino = ciudadDestino;
         this.tipo = tipo;
@@ -66,6 +67,7 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
         this.avion = avion;
         this.estado = estado;
         this.ticket = ticket;
+        this.asientosDeAvion = asientosDeAvion;
     }
 
     public long getIdVuelo() {
@@ -139,7 +141,23 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
         this.ticket = ticket;
     }
 
-    @Override
+    public List<ModelAsiento> getAsiento() {
+		return asiento;
+	}
+
+	public void setAsiento(List<ModelAsiento> asiento) {
+		this.asiento = asiento;
+	}
+
+	public int getAsientosDeAvion() {
+		return asientosDeAvion;
+	}
+
+	public void setAsientosDeAvion(int asientosDeAvion) {
+		this.asientosDeAvion = asientosDeAvion;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ModelVuelo vuelo)) return false;
@@ -167,23 +185,17 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
                 getTicket());
     }
 
-    @Override
-    public String toString() {
-        return "ModelVuelo{" +
-                "idVuelo=" + idVuelo +
-                ", ciudadOrigen=" + ciudadOrigen +
-                ", ciudadDestino=" + ciudadDestino +
-                ", tipo=" + tipo +
-                ", precioVuelo=" + precioVuelo +
-                ", fecha=" + fecha +
-                ", hora=" + hora +
-                ", avion=" + avion +
-                ", estado=" + estado +
-                ", ticket=" + ticket +
-                '}';
-    }
+    
     
     @Override
+	public String toString() {
+		return "ModelVuelo [idVuelo=" + idVuelo + ", ciudadOrigen=" + ciudadOrigen + ", ciudadDestino=" + ciudadDestino
+				+ ", tipo=" + tipo + ", precioVuelo=" + precioVuelo + ", fecha=" + fecha + ", hora=" + hora + ", avion="
+				+ avion + ", estado=" + estado + ", ticket=" + ticket + ", asiento=" + asiento + ", asientosDeAvion="
+				+ asientosDeAvion + "]";
+	}
+
+	@Override
     public int compareTo(ModelVuelo otroVuelo) {
         return this.fecha.compareTo(otroVuelo.getFecha());
     }

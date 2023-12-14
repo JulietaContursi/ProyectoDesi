@@ -1,5 +1,6 @@
 package com.desi.tp2.Controller;
 
+import com.desi.tp2.Model.ModelTicket;
 import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,78 +9,60 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/Tickets")
+@RestController
+@RequestMapping("/tickets")
     public class ControllerTicket {
 
 
     @Autowired
-    private ServiceCiudad ciudadService;
+    private ServiceCiudad ciudadService; //innecesario
     @Autowired
     private ServiceVuelo vueloRepository;
     @Autowired
-    private ServiceAvion avionRepository;
+    private ServiceAvion avionRepository; // innecesario
     @Autowired
     private ServiceCliente clienteRepository;
-    /*
     @Autowired
     private ServiceTicket ticketRepository;
 
-    @GetMapping("/")
-    public String mostrarTickets(Model model) throws Exception {
-        List<ModelTicket> tickets = ticketRepository.buscarTodo();
-        model.addAttribute("tickets", tickets);
-        return "tickets";
-    }
 
     @GetMapping("/lista")
-    public ModelAndView tickets() throws Exception {
-            ModelAndView mav = new ModelAndView("tickets");
-            mav.addObject("tickets", ticketRepository.buscarTodo());
-         return mav;
+    public ModelAndView mostrarTickets() throws Exception {
+        ModelAndView mav = new ModelAndView("Tickets");
+        mav.addObject("tickets", ticketRepository.buscarTodo());
+        return mav;
     }
 
-    @SneakyThrows
+
     @GetMapping("/{id}")
-    public ResponseEntity<ModelVuelo> obtenerVueloPorId(@PathVariable(value = "id") Long idVuelo) {
-        Optional<ModelVuelo> vuelo = Optional.ofNullable(vueloRepository.buscarPorId(idVuelo));
-        return vuelo.map(modelVuelo -> ResponseEntity.ok().body(modelVuelo)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ModelTicket> obtenerTicketPorId(@PathVariable(value = "id") Long idTicket) throws Exception {
+        Optional<ModelTicket> ticket = Optional.ofNullable(ticketRepository.buscarPorId(idTicket));
+        return ticket.map(modelTicket -> ResponseEntity.ok().body(modelTicket)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/nuevo")
     ModelAndView nuevoForm() throws Exception {
 
-        return new ModelAndView("crearVuelo")
-                .addObject("vuelo", new ModelVuelo())
-                .addObject("listaDeCiudades", ciudadService.buscarTodo())
-                .addObject("tiposDeVuelos", tipoVuelo.values())
-                .addObject("estadosDeVuelos", estadoVuelo.values())
-                .addObject("listaDeAviones", avionRepository.buscarTodo());
+        return new ModelAndView("crearTicket")
+                .addObject("ticket", new ModelTicket())
+                .addObject("listaDeTickets", ticketRepository.buscarTodo())
+                .addObject("listaDeVuelos", vueloRepository.buscarTodo())
+                .addObject("listaDeAviones", avionRepository.buscarTodo())
+        		.addObject("listaDeClientes", clienteRepository.buscarTodo());
     }
 
-    /*@GetMapping("/nuevo")
-    public String registrarVueloForm(Model modelo) throws Exception {
-        ModelVuelo vuelo = new ModelVuelo();
-
-        modelo.addAttribute("vuelo", vuelo);
-        modelo.addAttribute("listaDeCiudades", ciudadService.buscarTodo());
-        modelo.addAttribute("listaDeAviones", avionRepository.buscarTodo());
-        return "crearVuelo";
-    }*/
-
     @PostMapping("/nuevo")
-    public ModelAndView enviarForm(ModelVuelo vuelo, RedirectAttributes ra) {
+    public ModelAndView enviarForm(ModelTicket ticket, RedirectAttributes ra) {
         ModelAndView mav = new ModelAndView();
         try {
-            vueloRepository.guardar(vuelo);
-            ra.addFlashAttribute("msgExito","Vuelo creado con éxito!");
-            mav.setViewName("redirect:/vuelos/lista");
+            ticketRepository.guardar(ticket);
+            ra.addFlashAttribute("msgExito","Ticket creado con éxito!");
+            mav.setViewName("redirect:/tickets/lista");
         } catch (Exception e) {
             mav.setViewName("error");
-            mav.addObject("mensaje", "Error al crear el vuelo: " + e.getMessage());
+            mav.addObject("mensaje", "Error al crear el ticket: " + e.getMessage());
         }
         return mav;
     }

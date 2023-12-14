@@ -2,53 +2,55 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Listado de Tickets</title>
+  <title>Lista de tickets</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <h1>Aeropuerto de Sauce Viejo - Tickets</h1>
 </head>
 <body>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/"> Inicio</a>
-  <!-- Navbar links -->
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/tickets/nuevo}">Crear ticket</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-<div>
-  <div class="alert alert-success" role="alert" th:if="${msgExito ne null}" >
-    <td th:text="${msgExito}">
-    </td>
-  </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Ciudad Origen</th>
-        <th>Ciudad Destino</th>
-        <th>Tipo de Vuelo</th>
-        <th>Precio de Vuelo</th>
-        <th>Fecha y Hora</th>
-        <th>Avión</th>
-        <th>Estado del Vuelo</th>
-      </tr>
-    </thead>
-      <tbody>
-        <!--<tr th:each="vuelo : ${vuelos}">
-                  <td th:text="${vuelo.idVuelo}"></td>
-                  <td th:text="${vuelo.ciudadOrigen}"></td>
-                  <td th:text="${vuelo.ciudadDestino}"></td>
-                  <td th:text="${vuelo.tipo}"></td>
-          <td th:text="${vuelo.precioVuelo}"></td>
-          <td th:text="${vuelo.fechaHora}"></td>
-            <td th:text="${vuelo.avion}"></td>
-          <td th:text="${vuelo.estado}"></td>-->
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="/"> Inicio</a>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/tickets/nuevo}">Crear Ticket</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div >
+    <div class="alert alert-success" role="alert" th:if="${msgExito ne null}" >
+      <td th:text="${msgExito}">
+      </td>
+    </div>
+    <div class="alert alert-danger" role="alert" th:if="${msgError ne null}" >
+      <td th:text="${msgError}">
+      </td>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nº de ticket</th>
+          <th>Fecha del ticket</th>
+          <th>Nº de vuelo</th>
+          <th>Cliente</th>
+          <th>Fila</th>
+          <th>Columna</th>
+          <th>Precio</th>
+          <th>Fecha del vuelo</th>
+          <th>Origen</th>
+          <th>Destino</th>
         </tr>
+      </thead>
+    <!--  <tbody>
+       Itera sobre la lista de ciudades y muestra cada una en una fila de la tabla 
+        <tr th:each="tickets : ${tickets}">
+          <td th:text="${}"></td>
+          <td th:text="${}"></td>
+          <td th:text="${}"></td>
+        </tr>-->
       </tbody>
-  </table>
-</div>
+    </table>
+  </div>
 </body>
 </html>

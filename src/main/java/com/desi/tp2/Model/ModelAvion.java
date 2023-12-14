@@ -14,9 +14,10 @@ public class ModelAvion {
     @OneToMany(targetEntity = ModelVuelo.class, fetch = FetchType.LAZY, mappedBy = "avion")
     private List<ModelVuelo> vuelos;
 	
+    /*
     @OneToMany(targetEntity = ModelAsiento.class, fetch = FetchType.LAZY, mappedBy = "avion")
 	private List<ModelAsiento> asientos;
-    
+    */
     private String nombre;
 
     private int filas;
