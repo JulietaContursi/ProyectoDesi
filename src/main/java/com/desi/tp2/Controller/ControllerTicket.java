@@ -19,7 +19,7 @@ import java.util.Optional;
     @Autowired
     private ServiceVuelo vueloRepository;
     @Autowired
-    private ServiceAvion avionRepository; // innecesario
+    private ServiceAsiento asientoRepository;
     @Autowired
     private ServiceCliente clienteRepository;
     @Autowired
@@ -40,15 +40,13 @@ import java.util.Optional;
         return ticket.map(modelTicket -> ResponseEntity.ok().body(modelTicket)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/nuevo")
-    ModelAndView nuevoForm() throws Exception {
+    @GetMapping("/crearTicket/{idVuelo}")
+    public ModelAndView seleccionarAsiento(@PathVariable("idVuelo") int idVuelo, ModelAndView mav) throws Exception {
 
-        return new ModelAndView("crearTicket")
-                .addObject("ticket", new ModelTicket())
-                .addObject("listaDeTickets", ticketRepository.buscarTodo())
-                .addObject("listaDeVuelos", vueloRepository.buscarTodo())
-                .addObject("listaDeAviones", avionRepository.buscarTodo())
-        		.addObject("listaDeClientes", clienteRepository.buscarTodo());
+        mav.addObject("vuelo", vueloRepository.buscarPorId(idVuelo));
+        mav.addObject("asientosDisponibles", vueloRepository.buscarAsientoLibres());
+        mav.addObject("listaDeClientes", clienteRepository.buscarTodo());
+        return mav;
     }
 
     @PostMapping("/nuevo")
@@ -64,6 +62,8 @@ import java.util.Optional;
         }
         return mav;
     }
+    
+    
 
     @PutMapping("/{id}")
     public ResponseEntity<ModelVuelo> actualizarVuelo(@PathVariable(value = "id") Long idVuelo,

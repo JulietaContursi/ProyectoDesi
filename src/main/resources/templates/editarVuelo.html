@@ -9,7 +9,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="#">Registro de Vuelo</a>
+    <a class="navbar-brand" href="#">Edición de Vuelo</a>
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav">
@@ -24,14 +24,14 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-            <h2 class="text-center">Carga de vuelo</h2>
+            <h2 class="text-center">Edición de vuelo</h2>
             <div class="card-body">
 
-                <form th:action="@{'/vuelos/nuevo'}" th:object="${vuelo}" method="post">
+                <form th:object="${vuelo}" method="put">
                     <div>
-                        <input type="hidden" th:field="*{idVuelo}">
+                        <input type="hidden" th:field="*{vuelo.idVuelo}">
                         <label>Ciudad Origen</label>
-                        <select th:field="${vuelo.ciudadOrigen}" class="form-control" >
+                        <select th:field="${vuelo.ciudadOrigen}" class="form-control">
                             <option th:each="ciudad :${listaDeCiudades}"
                                     th:value="${ciudad.idCiudad}"
                                     th:text="${ciudad.nombre}"/>
@@ -52,25 +52,25 @@
                         </select>
                         <br>
                         <label>Tipo de Vuelo:</label>
-                        <select th:field="*{tipo}" class="form-control">
+                        <select th:field="*{vuelo.tipo}" class="form-control">
                             <option th:each="tipoOpt : ${tiposDeVuelos}"
                                     th:value="${tipoOpt}"
                                     th:text="${tipoOpt}"></option>
                         </select>
                         <br>
                         <label>Precio del Vuelo en ar$:</label>
-                        <input type="number" step="1.00" th:field="*{precioVuelo}" class="form-control" min="0" required/>
+                        <input type="number" step="1.00" th:field="*{vuelo.precioVuelo}" class="form-control" min="0" required/>
                         <br>
 
                         <label>Fecha del vuelo:</label>
-                        <input type="date" th:field="*{fecha}" class="form-control" required/>
+                        <input type="date" th:field="*{vuelo.fecha}" class="form-control" required/>
                         <br>
 
                         <label>Hora del vuelo:</label>
-                        <input type="time" th:field="*{hora}" class="form-control" required/>
+                        <input type="time" th:field="*{vuelo.hora}" class="form-control" required/>
                         <br>
                         <label>Estado del Vuelo:</label>
-                        <select th:field="*{estado}" class="form-control" name="Estado" th:placeholder="estado">
+                        <select th:field="*{vuelo.estado}" class="form-control" name="Estado" th:placeholder="estado">
                             <option th:each="estadoOpt : ${estadosDeVuelos}"
                                     th:value="${estadoOpt}"
                                     th:text="${estadoOpt}"></option>
@@ -81,26 +81,7 @@
 
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" data-bs-toggle="modal" data-bs-target="#confirmar" onclick="return confirm('Quieres guardar el registro')">Cargar Vuelo</button>
-
-                    <div class="modal fade" id="confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar Vuelo</button>
 
                 </form>
             </div>
@@ -110,8 +91,6 @@
 
 <br>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HV4E8X4YFwLXT9h6h16OvRXyYWlR5vKt7abG2AN7QF6Ql1t6LZAD+3Gk8fP6DfFk"
-        crossorigin="anonymous"></script>
+
 </body>
 </html>

@@ -61,7 +61,8 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
     public ModelVuelo() {
     }
 
-    public ModelVuelo(ModelCiudad ciudadOrigen, ModelCiudad ciudadDestino, tipoVuelo tipo, double precioVuelo, LocalDate fecha, LocalTime hora, ModelAvion avion, estadoVuelo estado, List<ModelTicket> ticket, int asientosDeAvion) {
+    public ModelVuelo(long idVuelo, ModelCiudad ciudadOrigen, ModelCiudad ciudadDestino, tipoVuelo tipo, double precioVuelo, LocalDate fecha, LocalTime hora, ModelAvion avion, estadoVuelo estado, List<ModelTicket> ticket, int asientosDeAvion) {
+        this.idVuelo = idVuelo;
         this.ciudadOrigen = ciudadOrigen;
         this.ciudadDestino = ciudadDestino;
         this.tipo = tipo;
@@ -77,6 +78,8 @@ public class ModelVuelo implements Comparable<ModelVuelo>{
     public long getIdVuelo() {
         return idVuelo;
     }
+
+    public void setIdVuelo(long idVuelo) {this.idVuelo = idVuelo;}
 
     public ModelCiudad getCiudadOrigen() {
         return ciudadOrigen;

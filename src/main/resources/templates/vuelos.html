@@ -81,10 +81,12 @@
 					<td th:with="cantidadAsientos=${cantidadAsientosVendidos.containsKey(vuelo.idVuelo) ? cantidadAsientosVendidos[vuelo.idVuelo] : '0'}">
 					    <span class="btn btn-outline-success btn-sm" th:text="${cantidadAsientos}"></span>
 					</td>
-									
+
 					<td>
-						<a class="btn btn-success btn-sm" th:href="@{/venderAsiento/{id}(id=${vuelo.idVuelo})}"
-							method="post">Vender Ticket</a>
+						<a class="btn btn-success btn-sm" th:href="@{/vuelos/crearTicket/{id}(id=${vuelo.idVuelo})}" method="get">Vender Ticket</a>
+					</td>
+					<td>
+						<a class="btn btn-warning btn-sm" th:href="@{/vuelos/editar/{id}(id=${vuelo.idVuelo})}" method="get">Editar</a>
 					</td>
 					<td>
 						<a class="btn btn-danger btn-sm" th:href="@{/vuelos/eliminar/{id}(id=${vuelo.idVuelo})}" method="delete" onclick="return confirm('Quieres borrar el vuelo?')">Eliminar</a>
