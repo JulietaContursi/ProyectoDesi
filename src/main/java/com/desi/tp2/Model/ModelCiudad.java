@@ -1,5 +1,4 @@
 package com.desi.tp2.Model;
-
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +23,11 @@ public class ModelCiudad {
 
     public ModelCiudad() {
     }
+    public ModelCiudad(long idCiudad,String nombre, int codigoPostal) {
+        this.idCiudad = idCiudad;
+        this.nombre = nombre;
+        this.codigoPostal = codigoPostal;
+    }
     public ModelCiudad(String nombre, int codigoPostal) {
         this.nombre = nombre;
         this.codigoPostal = codigoPostal;
@@ -33,6 +37,9 @@ public class ModelCiudad {
         return idCiudad;
     }
 
+    public void setIdCiudad(long idCiudad) {
+        this.idCiudad = idCiudad;
+    }
     public List<ModelVuelo> getOrigenes() {
         return Origenes;
     }
@@ -74,11 +81,11 @@ public class ModelCiudad {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ModelCiudad that)) return false;
-        return idCiudad == that.idCiudad && codigoPostal == that.codigoPostal && Objects.equals(Origenes, that.Origenes) && Objects.equals(destinos, that.destinos) && Objects.equals(nombre, that.nombre);
+        return getIdCiudad() == that.getIdCiudad() && getCodigoPostal() == that.getCodigoPostal() && Objects.equals(getOrigenes(), that.getOrigenes()) && Objects.equals(getDestinos(), that.getDestinos()) && Objects.equals(getNombre(), that.getNombre());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCiudad, Origenes, destinos, nombre, codigoPostal);
+        return Objects.hash(getIdCiudad(), getOrigenes(), getDestinos(), getNombre(), getCodigoPostal());
     }
 }

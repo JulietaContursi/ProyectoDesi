@@ -4,8 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Listado de Vuelos</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<link rel="stylesheet" href="/CSS/bootstrap.min.css">
 	<h1>Aeropuerto de Sauce Viejo - Vuelos</h1>
 </head>
 
@@ -24,11 +23,11 @@
 
 	<!-- Búsqueda de Vuelos -->
 	<div>
-		<form class="form-inLine" th:action="@{/vuelos/lista}">
+		<form class="form-inLine" th:action="@{/vuelos/lista}" >
 			<div class="form-group mx-sm-3 mb-2">
 				<label>Filtrar : </label>
-				<input type="date" name="fecha" class="form-controL" id="inicio" th:value="${fecha}"
-					placeholder="Seleccione la fecha">
+				<label for="inicio"></label>
+				<input type="date" name="fecha" class="form-controL" id="inicio" th:value="${fecha}" placeholder="Seleccione la fecha">
 				<input type="submit" class="btn btn-info mb-2" value="Buscar">
 				&nbsp;&nbsp;
 				<input type="button" class="btn btn-secondary mb-2" value="Lista sin filtros" onclick="limpiarCampos()">
@@ -38,12 +37,10 @@
 
 	<div>
 		<div class="alert alert-danger" role="alert" th:if="${msgError ne null}">
-			<td th:text="${msgError}">
-			</td>
+			<td th:text="${msgError}"></td>
 		</div>
 		<div class="alert alert-success" role="alert" th:if="${msgExito ne null}">
-			<td th:text="${msgExito}">
-			</td>
+			<td th:text="${msgExito}"></td>
 		</div>
 		<table class="table table-striped">
 			<thead>
@@ -83,13 +80,16 @@
 					</td>
 
 					<td>
-						<a class="btn btn-success btn-sm" th:href="@{/vuelos/crearTicket/{id}(id=${vuelo.idVuelo})}" method="get">Vender Ticket</a>
+						<a class="btn btn-success btn-sm" th:href="@{/vuelos/crearTicket/{id}(id=${vuelo.idVuelo})}"
+						   methods="get">Vender Ticket</a>
 					</td>
 					<td>
-						<a class="btn btn-warning btn-sm" th:href="@{/vuelos/editar/{id}(id=${vuelo.idVuelo})}" method="get">Editar</a>
+						<a class="btn btn-warning btn-sm" th:href="@{/vuelos/editar/{id}(id=${vuelo.idVuelo})}"
+						   methods="get">Editar</a>
 					</td>
 					<td>
-						<a class="btn btn-danger btn-sm" th:href="@{/vuelos/eliminar/{id}(id=${vuelo.idVuelo})}" method="delete" onclick="return confirm('Quieres borrar el vuelo?')">Eliminar</a>
+						<a class="btn btn-danger btn-sm" th:href="@{/vuelos/eliminar/{id}(id=${vuelo.idVuelo})}"
+						   methods="delete" onclick="return confirm('Quieres borrar el vuelo?')">Eliminar</a>
 					</td>
 				</tr>
 			</tbody>

@@ -37,18 +37,25 @@ import java.util.Optional;
         }
 
         @GetMapping("/nuevo")
-        ModelAndView nuevo(){
-            return new ModelAndView("crearCiudad")
-                    .addObject("ciudad" , new ModelCiudad());
+        public ModelAndView nuevo(){
+            ModelAndView mav = new ModelAndView("crearCiudad");
+                mav.addObject("ciudad" , new ModelCiudad());
+                mav.addObject("titulo", "Crear Ciudad");
+            return mav;
         }
 
         @PostMapping("/nuevo")
         public ModelAndView crear(ModelCiudad ciudad, RedirectAttributes ra) {
             ModelAndView mav = new ModelAndView();
             try {
+                if(ciudad.getIdCiudad() != 0){
+                    ra.addFlashAttribute("msgExito", "Ciudad modificada con éxito!");
+                    mav.setViewName("redirect:/ciudades/lista");
+                }else{
+                    ra.addFlashAttribute("msgExito", "Ciudad creada con éxito!");
+                    mav.setViewName("redirect:/ciudades/lista");
+                }
                 ciudadRepository.guardar(ciudad);
-                ra.addFlashAttribute("msgExito","Ciudad creada con éxito!");
-                mav.setViewName("redirect:/ciudades/lista");
             } catch (Exception e) {
                 mav.setViewName("error");
                 mav.addObject("mensaje", "Error al crear la ciudad: " + e.getMessage());
@@ -57,23 +64,17 @@ import java.util.Optional;
         }
 
 
-        @PutMapping("/editar/{id}")
-        public ResponseEntity<ModelCiudad> actualizarCiudad(@PathVariable(value = "id") Long idCiudad,
-                                                       @RequestBody ModelCiudad ciudadActualizada) throws Exception {
-            Optional<ModelCiudad> ciudad = Optional.ofNullable(ciudadRepository.buscarPorId(idCiudad));
-            if (ciudad.isPresent()) {
-                ModelCiudad ciudadExistente = ciudad.get();
-                ciudadExistente.setNombre(ciudadActualizada.getNombre());
-                ciudadExistente.setCodigoPostal(ciudadActualizada.getCodigoPostal());
-                ModelCiudad ciudadActualizadaGuardada = ciudadRepository.guardar(ciudadExistente);
-                return ResponseEntity.ok(ciudadActualizadaGuardada);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+        @GetMapping("/editar/{id}")
+        public ModelAndView editarForm(@PathVariable long id, ModelAndView mav) throws Exception {
+                ModelCiudad ciudad = ciudadRepository.buscarPorId(id);
+                mav.addObject("ciudad", ciudad);
+                mav.addObject("titulo","Editar Ciudad");
+                mav.setViewName("crearCiudad");
+            return mav;
         }
 
         @GetMapping("/eliminar/{id}")
-        public ModelAndView deleteCity(@PathVariable Long id, RedirectAttributes ra) throws Exception {
+        public ModelAndView deleteCity(@PathVariable Long id, RedirectAttributes ra) {
             ModelAndView mav = new ModelAndView();
             try{
                 ciudadRepository.borrar(id);

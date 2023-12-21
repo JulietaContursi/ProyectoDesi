@@ -3,12 +3,9 @@ package com.desi.tp2.Controller;
 import com.desi.tp2.Model.ModelVuelo.tipoVuelo;
 import com.desi.tp2.Model.ModelVuelo.estadoVuelo;
 import com.desi.tp2.Model.ModelAvion;
-import com.desi.tp2.Model.ModelTicket;
 import com.desi.tp2.Model.ModelVuelo;
 import com.desi.tp2.Service.ServiceAvion;
 import com.desi.tp2.Service.ServiceCiudad;
-import com.desi.tp2.Service.ServiceCliente;
-import com.desi.tp2.Service.ServiceTicket;
 import com.desi.tp2.Service.ServiceVuelo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,19 +29,14 @@ public class ControllerVuelo {
 	private ServiceVuelo vueloRepository;
 	@Autowired
 	private ServiceAvion avionRepository;
-	@Autowired
-	private ServiceCliente clienteRepository;
 
-	@Autowired
-	private ServiceTicket ticketRepository;
 
 	@GetMapping("/lista")
 	public ModelAndView vuelos(
-			@RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> fechaOpt,
-			RedirectAttributes ra) throws Exception {
+			@RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> fechaOpt) throws Exception {
 		ModelAndView mav = new ModelAndView("vuelos");
+		int restantes = 0;
 		if (fechaOpt.isPresent()) {
-			int restantes = 0;
 			LocalDate fecha = fechaOpt.get();
 			List<ModelVuelo> vuelos;
 			vuelos = vueloRepository.ordenarPorFechaHora(vueloRepository.findVuelosByFecha(Optional.of(fecha)));
@@ -55,9 +47,9 @@ public class ControllerVuelo {
 				mav.addObject("vuelos", vuelos);
 				mav.addObject("cantidadAsientosVendidos", vueloRepository.buscarAsientoLibres());
 				mav.addObject("restantes", restantes);
+				mav.addObject("fecha", fecha);
 			}
 		} else {
-			int restantes = 0;
 			List<ModelVuelo> vuelos;
 			vuelos = vueloRepository.ordenarPorFechaHora(vueloRepository.buscarTodo());
 			mav.addObject("vuelos", vuelos);
@@ -90,23 +82,20 @@ public class ControllerVuelo {
 		Optional<LocalDate> fecha = Optional.ofNullable(vuelo.getFecha());
 		Optional<ModelAvion> avion = Optional.ofNullable(vuelo.getAvion());
 		List<ModelVuelo> vuelos = vueloRepository.findVuelosByFechaAndAvion(fecha, avion);
-
-		// obtenemos la cantidad de asientos del avion y lo guardamos en el vuelo
 		try {
 			if (vuelos.isEmpty()) {
 				vuelo.setAsientosDeAvion(vueloRepository.calcularCantidadAsientos(avion));
-
-				vueloRepository.guardar(vuelo);
-				if (vuelo.getIdVuelo() == 0) { //mensaje al crear un vuelo
-					ra.addFlashAttribute("msgExito", "Vuelo creado con éxito!");
-					mav.setViewName("redirect:/vuelos/lista");
-				} else {					//mensaje al modificar un vuelo
+				if (vuelo.getIdVuelo() != 0) { //mensaje al crear un vuelo
 					ra.addFlashAttribute("msgExito", "Vuelo Modificado con éxito!");
 					mav.setViewName("redirect:/vuelos/lista");
+				} else {					//mensaje al modificar un vuelo
+					ra.addFlashAttribute("msgExito", "Vuelo creado con éxito!");
+					mav.setViewName("redirect:/vuelos/lista");
 				}
+				vueloRepository.guardar(vuelo);
 			} else {
 				ra.addFlashAttribute("msgError",
-						"No se puede creaer éste vuelo porque el avión ya se utiliza ese día. ");
+						"No se puede crear éste vuelo porque el avión ya se utiliza ese día. ");
 				mav.setViewName("redirect:/vuelos/lista");
 			}
 		} catch (Exception e) {
@@ -127,40 +116,9 @@ public class ControllerVuelo {
 		mav.addAttribute("tiposDeVuelos", tipoVuelo.values());
 		return "crearVuelo";
 	}
-	/*
-        @GetMapping("/crearTicket/{id}")
-        public ModelAndView venderAsiento(@PathVariable("id") long id, ModelAndView mav) throws Exception {
-            mav.addObject("vuelo", vueloRepository.buscarPorId(id));
-            mav.addObject("asientosDisponibles", vueloRepository.buscarAsientoLibres());
-            mav.addObject("listaDeClientes", clienteRepository.buscarTodo());
-            mav.addObject("tiposDeVuelos", tipoVuelo.values());
-            mav.addObct("estadosDeVuelos", estadoVuelo.values());
-            return mav;
-        }
-    /*
-        @PostMapping("/editar/{id}")
-        public ResponseEntity<ModelVuelo> actualizarVuelo(@PathVariable("id") Long id,
-                @RequestBody ModelVuelo vueloActualizado) throws Exception {
-            Optional<ModelVuelo> vuelo = Optional.ofNullable(vueloRepository.buscarPorId(id));
-            if (vuelo.isPresent()) {
-                ModelVuelo vueloExistente = vuelo.get();
-                vueloExistente.setCiudadOrigen(vueloActualizado.getCiudadOrigen());
-                vueloExistente.setCiudadDestino(vueloActualizado.getCiudadDestino());
-                vueloExistente.setTipo(vueloActualizado.getTipo());
-                vueloExistente.setPrecioVuelo(vueloActualizado.getPrecioVuelo());
-                vueloExistente.setFecha(vueloActualizado.getFecha());
-                vueloExistente.setAvion(vueloActualizado.getAvion());
-                vueloExistente.setEstado(vueloActualizado.getEstado());
 
-                ModelVuelo vueloActualizadoGuardado = vueloRepository.guardar(vueloExistente);
-                return ResponseEntity.ok(vueloActualizadoGuardado);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        }
-    */
 	@GetMapping("/eliminar/{id}")
-	public ModelAndView deleteVuelo(@PathVariable Long id, RedirectAttributes ra) throws Exception {
+	public ModelAndView deleteVuelo(@PathVariable Long id, RedirectAttributes ra) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			vueloRepository.borrar(id);
