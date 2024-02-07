@@ -86,6 +86,10 @@ public class ModelCiudad {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdCiudad(), getOrigenes(), getDestinos(), getNombre(), getCodigoPostal());
+        return Objects.hash(getIdCiudad(),
+                getOrigenes(),
+                getDestinos(),
+                getNombre(),
+                getCodigoPostal());
     }
 }

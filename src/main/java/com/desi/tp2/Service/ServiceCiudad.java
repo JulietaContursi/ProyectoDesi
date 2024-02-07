@@ -3,12 +3,14 @@ package com.desi.tp2.Service;
 import com.desi.tp2.Model.ModelCiudad;
 import com.desi.tp2.Repository.RepoCiudad;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ServiceCiudad implements ServicioBase<ModelCiudad>{
+
     private final RepoCiudad repoCiudad;
 
     public ServiceCiudad(RepoCiudad repoCiudad) {
